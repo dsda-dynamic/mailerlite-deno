@@ -1,17 +1,17 @@
-import { AxiosResponse } from "axios";
+import { DiscriminatedResponse } from "../../utils/fetch.ts";
 
 export interface LanguagesInterface {
-    get:    ()  => Promise<AxiosResponse<ListAllLanguagesResponse>>;
+  get: () => Promise<DiscriminatedResponse<ListAllLanguagesResponse>>;
 }
 
 export interface ListAllLanguagesResponse {
-    data: Array<LanguageObject>;
+  data: Array<LanguageObject>;
 }
 
 export interface LanguageObject {
-    id:         string;
-    shortcode:  string;
-    iso639:     string;
-    name:       string;
-    direction:  string;
+  id: string;
+  shortcode: string;
+  iso639: string;
+  name: string;
+  direction: string;
 }

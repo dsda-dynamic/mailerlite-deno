@@ -1,105 +1,115 @@
-import { describe, it, expect, expectTypeOf } from "vitest";
-import "dotenv/config";
-import MailerLite from '../../index';
-import {CreateWebhookParams, ListAllWebhooksResponse, SingleWebhookResponse, UpdateWebhookParams} from "./webhooks.types";
-import {getRandomInt, handleCatchedError} from "../../utils/helpers";
+import { expectTypeOf } from "expect-type";
+import { expect } from "jsr:@std/expect";
+import MailerLite from "../../index.ts";
+import { getRandomInt, handleCatchedError } from "../../utils/helpers.ts";
+import { startTalkbackServer } from "../../utils/setup-teardown-hooks.ts";
+import {
+  CreateWebhookParams,
+  ListAllWebhooksResponse,
+  SingleWebhookResponse,
+  UpdateWebhookParams,
+} from "./webhooks.types.ts";
 
-const MAILERLITE_API_KEY = process.env.API_KEY as string;
+const MAILERLITE_API_KEY = Deno.env.get("API_KEY")!;
 
-if (!MAILERLITE_API_KEY)
-    throw "No MailerLite API key found in environment variables";
+if (!MAILERLITE_API_KEY) {
+  throw "No MailerLite API key found in environment variables";
+}
+const CUSTOM_MAILERLITE_URL = Deno.env.get("CUSTOM_MAILERLITE_URL")!;
 
-const mailerlite = new MailerLite({
+Deno.test("Webhooks", async (t) => {
+  let createdWebhookId: string;
+
+  const mailerlite = new MailerLite({
     api_key: MAILERLITE_API_KEY,
-    base_path: "http://localhost:9090",
-});
+    base_path: CUSTOM_MAILERLITE_URL,
+  });
 
-describe("Webhooks", () => {
+  const stopServer = await startTalkbackServer();
 
-    let createdWebhookId: string;
+  await t.step("List all webhooks", async () => {
+    const response = await mailerlite.webhooks.get();
 
-    it.concurrent("List all webhooks", async () => {
+    expect(response.success);
+    if (response.success) {
+      expect(response).not.toBeNull();
+      expect(response.data).toBeDefined();
+      expect(Array.isArray(response.data.data)).toBeTruthy();
+      expectTypeOf(response.data).toEqualTypeOf<ListAllWebhooksResponse>();
+    }
+  });
 
-        try {
-            const response = await mailerlite.webhooks.get();
+  await t.step("Create a webhook", async () => {
+    const randomInt = getRandomInt();
 
-            expect(response).not.toBeNull();
-            expect(response.data).toBeDefined();
-            expect(Array.isArray(response.data.data)).toBeTruthy();
-            expectTypeOf(response.data).toEqualTypeOf<ListAllWebhooksResponse>()
-        } catch (error) {
-            handleCatchedError(error);
-        }
-    });
+    const params: CreateWebhookParams = {
+      name: `Test webhook nodejs ${randomInt}`,
+      events: ["subscriber.updated"],
+      url:
+        "http://www.marvin.com/omnis-accusamus-est-rem-delectus-quaerat.html",
+    };
 
-    it("Create a webhook", async () => {
-        const randomInt = getRandomInt();
+    const response = await mailerlite.webhooks.create(params);
 
-        const params: CreateWebhookParams = {
-            name:  `Test webhook nodejs ${randomInt}`,
-            events: ["subscriber.updated"],
-            url:    "http://www.marvin.com/omnis-accusamus-est-rem-delectus-quaerat.html"
-        };
+    expect(response.success);
+    if (response.success) {
+      expect(response.data).toBeDefined();
+      expect(response.data.data).toBeDefined();
+      expect(response.data.data.id).not.toBeNull();
+      expectTypeOf(response.data).toEqualTypeOf<SingleWebhookResponse>();
 
-        try {
-            const response = await mailerlite.webhooks.create(params);
+      createdWebhookId = response.data.data.id;
+    }
+  });
 
-            expect(response).not.toBeNull();
-            expect(response.data).toBeDefined();
-            expect(response.data.data).toBeDefined();
-            expect(response.data.data.id).not.toBeNull();
-            expectTypeOf(response.data).toEqualTypeOf<SingleWebhookResponse>()
+  await t.step("Get a webhook", async () => {
+    const response = await mailerlite.webhooks.find(createdWebhookId);
 
-            createdWebhookId = response.data.data.id;
-        } catch (error) {
-            handleCatchedError(error);
-        }
-    });
+    expect(response.success).toBeTruthy();
+    if (response.success) {
+      expect(response.data).toBeDefined();
+      expect(response.data.data).toBeDefined();
+      expect(response.data.data.id).not.toBeNull();
+      expect(typeof response.data.data.id).toBe("string");
+      expectTypeOf(response.data).toEqualTypeOf<SingleWebhookResponse>();
+    }
+  });
 
-    it("Get a webhook", async () => {
-        try {
-            const response = await mailerlite.webhooks.find(createdWebhookId);
+  await t.step("Update a webhook", async () => {
+    const randomInt = getRandomInt();
 
-            expect(response).not.toBeNull();
-            expect(response.data).toBeDefined();
-            expect(response.data.data).toBeDefined();
-            expect(response.data.data.id).not.toBeNull();
-            expectTypeOf(response.data).toEqualTypeOf<SingleWebhookResponse>()
-        } catch (error) {
-            handleCatchedError(error);
-        }
-    });
+    const params: UpdateWebhookParams = {
+      name: `Test webhook nodejs updated ${randomInt}`,
+      enabled: false,
+    };
 
-    it("Update a webhook", async () => {
-        const randomInt = getRandomInt();
+    const response = await mailerlite.webhooks.update(
+      createdWebhookId,
+      params,
+    );
 
-        const params: UpdateWebhookParams = {
-            name:  `Test webhook nodejs updated ${randomInt}`,
-            enabled: false
-        };
+    expect(response.success).toBeTruthy();
+    if (response.success) {
+      expect(response).not.toBeNull();
+      expect(response.data).toBeDefined();
+      expect(response.data.data).toBeDefined();
+      expect(response.data.data.id).not.toBeNull();
+      expectTypeOf(response.data).toEqualTypeOf<SingleWebhookResponse>();
+    }
+  });
 
-        try {
-            const response = await mailerlite.webhooks.update(createdWebhookId, params);
+  await t.step("Delete a webhook", async () => {
+    try {
+      const response = await mailerlite.webhooks.delete(createdWebhookId);
 
-            expect(response).not.toBeNull();
-            expect(response.data).toBeDefined();
-            expect(response.data.data).toBeDefined();
-            expect(response.data.data.id).not.toBeNull();
-            expectTypeOf(response.data).toEqualTypeOf<SingleWebhookResponse>()
-        } catch (error) {
-            handleCatchedError(error);
-        }
-    });
+      expect(response.success).toBeTruthy();
+      if (response.success) {
+        expect(response.data).toBeNull();
+      }
+    } catch (error) {
+      handleCatchedError(error);
+    }
+  });
 
-    it("Delete a webhook", async () => {
-        try {
-            const response = await mailerlite.webhooks.delete(createdWebhookId);
-
-            expect(response).not.toBeNull();
-            expect(response.data).toBeDefined();
-        } catch (error) {
-            handleCatchedError(error);
-        }
-    });
-
+  await stopServer();
 });

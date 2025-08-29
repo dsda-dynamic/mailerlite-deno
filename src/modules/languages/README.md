@@ -1,15 +1,17 @@
 # Timezones
 
 ### List all languages
+
 [Official Documentation](https://developers.mailerlite.com/docs/languages.html)
 
 ---
+
 ```javascript
 mailerlite.languages.get()
-  .then(response => {
+  .then((response) => {
     console.log(response.data);
   })
-  .catch(error => {
+  .catch((error) => {
     if (error.response) console.log(error.response.data);
   });
 ```

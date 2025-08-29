@@ -1,7 +1,7 @@
 # Subscribers
 
-
 ### List all subscribers
+
 [Official Documentation](https://developers.mailerlite.com/docs/subscribers.html#list-all-subscribers)
 
 ---
@@ -24,8 +24,8 @@ mailerlite.subscribers.get(params)
 
 ### Create/update subscriber
 [Official Documentation](https://developers.mailerlite.com/docs/subscribers.html#create-update-subscriber)
-
 ---
+
 ```javascript
 const params = {
   email: "dummy@example.com",
@@ -37,7 +37,7 @@ const params = {
     city: "Best city",
     phone: "37060677606",
     state: "Best state",
-    z_i_p: "99999"
+    z_i_p: "99999",
   },
   groups: ["4243829086487936"],
   status: "active", // possible statuses: active, unsubscribed, unconfirmed, bounced or junk.
@@ -45,19 +45,20 @@ const params = {
   ip_address: null,
   opted_in_at: null, // yyyy-MM-dd HH:mm:ss
   optin_ip: null,
-  unsubscribed_at: null // yyyy-MM-dd HH:mm:ss
+  unsubscribed_at: null, // yyyy-MM-dd HH:mm:ss
 };
 
 mailerlite.subscribers.createOrUpdate(params)
-  .then(response => {
+  .then((response) => {
     console.log(response.data);
   })
-  .catch(error => {
+  .catch((error) => {
     if (error.response) console.log(error.response.data);
   });
 ```
 
 ### Update a subscriber
+
 [Official Documentation](https://developers.mailerlite.com/docs/subscribers.html#update-a-subscriber)
 
 ---
@@ -94,20 +95,21 @@ mailerlite.subscribers.update("subscriber_id",params)
 
 ### Fetch a subscriber
 [Official Documentation](https://developers.mailerlite.com/docs/subscribers.html#fetch-a-subscriber)
-
 ---
+
 ```javascript
 const param = "SUBSCRIBER_ID" || "SUBSCRIBER_EMAIL";
 mailerlite.subscribers.find(param)
-  .then(response => {
+  .then((response) => {
     console.log(response.data);
   })
-  .catch(error => {
+  .catch((error) => {
     if (error.response) console.log(error.response.data);
   });
 ```
 
 ### Fetch total subscribers count
+
 [Official Documentation](https://developers.mailerlite.com/docs/subscribers.html#fetch-total-subscribers-count)
 
 ---
@@ -123,28 +125,30 @@ mailerlite.subscribers.getCount()
 
 ### Delete a subscriber
 [Official Documentation](https://developers.mailerlite.com/docs/subscribers.html#delete-a-subscriber)
-
 ---
+
 ```javascript
 mailerlite.subscribers.delete("SUBSCRIBER_ID")
-  .then(response => {
+  .then((response) => {
     console.log(response.data);
   })
-  .catch(error => {
+  .catch((error) => {
     if (error.response) console.log(error.response.data);
   });
 ```
 
 ### Forget a subscriber
+
 [Official Documentation](https://developers.mailerlite.com/docs/subscribers.html#forget-a-subscriber)
 
 ---
+
 ```javascript
 mailerlite.subscribers.forget("SUBSCRIBER_ID")
-  .then(response => {
+  .then((response) => {
     console.log(response.data);
   })
-  .catch(error => {
+  .catch((error) => {
     if (error.response) console.log(error.response.data);
   });
 ```

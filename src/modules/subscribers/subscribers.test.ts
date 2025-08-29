@@ -1,146 +1,140 @@
-import { describe, it, expect, expectTypeOf } from "vitest";
-import "dotenv/config";
-import MailerLite from '../../index';
+import { expect } from "jsr:@std/expect";
+import { expectTypeOf } from "expect-type";
+
+import MailerLite from "../../index.ts";
+import { getRandomInt } from "../../utils/helpers.ts";
 import {
-    CreateOrUpdateSubscriberParams,
-    UpdateSubscriberParams,
-    GetSubscribersParams,
-    ListSubscribersResponse,
-    SingleSubscriberResponse,
-    CountSubscribersResponse
-} from "./subscribers.types";
-import {getRandomInt, handleCatchedError} from "../../utils/helpers";
+  CountSubscribersResponse,
+  CreateOrUpdateSubscriberParams,
+  GetSubscribersParams,
+  ListSubscribersResponse,
+  SingleSubscriberResponse,
+  UpdateSubscriberParams,
+} from "./subscribers.types.ts";
+import { startTalkbackServer as startTalkbackServer } from "../../utils/setup-teardown-hooks.ts";
 
-const MAILERLITE_API_KEY = process.env.API_KEY as string;
+const MAILERLITE_API_KEY = Deno.env.get("API_KEY");
+if (!MAILERLITE_API_KEY) {
+  throw new Error("No MailerLite API key found in environment variables");
+}
+const CUSTOM_MAILERLITE_URL = Deno.env.get("CUSTOM_MAILERLITE_URL")!;
 
-if (!MAILERLITE_API_KEY)
-    throw "No MailerLite API key found in environment variables";
+Deno.test("Subscribers", async (t) => {
+  let createdSubscriberId: string;
 
-const mailerlite = new MailerLite({
+  const stopServer = startTalkbackServer();
+  const mailerlite = new MailerLite({
     api_key: MAILERLITE_API_KEY,
-    base_path: "http://localhost:9090",
-});
+    base_path: CUSTOM_MAILERLITE_URL,
+  });
 
-describe("Subscribers", () => {
+  await t.step("List Subscribers", async () => {
+    const params: GetSubscribersParams = {
+      filter: {
+        status: "active", // possible statuses: active, unsubscribed, unconfirmed, bounced or junk.
+      },
+      limit: 5,
+    };
 
-    let createdSubscriberId: string;
+    const response = await mailerlite.subscribers.get(params);
 
-    it.concurrent("List Subscribers", async () => {
-        const params: GetSubscribersParams = {
-            filter: {
-                status: "active" // possible statuses: active, unsubscribed, unconfirmed, bounced or junk.
-            },
-            limit: 5
-        };
+    expect(response.success).toBeTruthy();
+    if (response.success) {
+      expect(response.data).toBeDefined();
+      expect(Array.isArray(response.data.data)).toBeTruthy();
+      expectTypeOf(response.data).toEqualTypeOf<ListSubscribersResponse>();
+    }
+  });
 
-        try {
-            const response = await mailerlite.subscribers.get(params);
+  await t.step("Create or update a subscriber", async () => {
+    const randomInt = getRandomInt();
 
-            expect(response).not.toBeNull();
-            expect(response.data).toBeDefined();
-            expect(Array.isArray(response.data.data)).toBeTruthy();
-            expectTypeOf(response.data).toEqualTypeOf<ListSubscribersResponse>()
-        } catch (error) {
-            handleCatchedError(error);
-        }
-    });
+    const params: CreateOrUpdateSubscriberParams = {
+      email: `test${randomInt}@nodejs.com`,
+      fields: {
+        name: `Test name ${randomInt}`,
+        last_name: `Test lastname ${randomInt}`,
+        company: `test company ${randomInt}`,
+        country: `test country ${randomInt}`,
+        city: `test city ${randomInt}`,
+      },
+      status: "active",
+      subscribed_at: "2022-11-23 09:59:56",
+    };
 
-    it("Create or update a subscriber", async () => {
-        const randomInt = getRandomInt();
+    const response = await mailerlite.subscribers.createOrUpdate(params);
 
-        const params: CreateOrUpdateSubscriberParams = {
-            email: `test${randomInt}@nodejs.com`,
-            fields:	{
-                name: `Test name ${randomInt}`,
-                last_name: `Test lastname ${randomInt}`,
-                company: `test company ${randomInt}`,
-                country: `test country ${randomInt}`,
-                city: `test city ${randomInt}`
-            },
-            status:	'active',
-            subscribed_at: '2022-11-23 09:59:56'
-        };
+    expect(response.success).toBeTruthy();
+    if (response.success) {
+      expect(response.data).toBeDefined();
+      expect(response.data.data).toBeDefined();
+      expect(response.data.data.id).not.toBeNull();
+      expectTypeOf(response.data).toEqualTypeOf<SingleSubscriberResponse>();
+      createdSubscriberId = response.data.data.id;
+    }
+  });
 
-        try {
-            const response = await mailerlite.subscribers.createOrUpdate(params);
+  await t.step("Update a subscriber", async () => {
+    const randomInt = getRandomInt();
 
-            expect(response).not.toBeNull();
-            expect(response.data).toBeDefined();
-            expect(response.data.data).toBeDefined();
-            expect(response.data.data.id).not.toBeNull();
-            expectTypeOf(response.data).toEqualTypeOf<SingleSubscriberResponse>()
-            createdSubscriberId = response.data.data.id;
-        } catch (error) {
-            handleCatchedError(error);
-        }
-    });
+    const params: UpdateSubscriberParams = {
+      fields: {
+        name: `Test name ${randomInt}`,
+        last_name: `Test lastname ${randomInt}`,
+        company: `test company ${randomInt}`,
+        country: `test country ${randomInt}`,
+        city: `test city ${randomInt}`,
+        email: `test${randomInt}@nodejs.com`,
+      },
+      status: "active",
+      subscribed_at: "2022-11-23 09:59:56",
+    };
 
-    it("Update a subscriber", async () => {
-        const randomInt = getRandomInt();
+    const response = await mailerlite.subscribers.update(
+      createdSubscriberId,
+      params,
+    );
 
-        const params: UpdateSubscriberParams = {
-            fields: {
-                name: `Test name ${randomInt}`,
-                last_name: `Test lastname ${randomInt}`,
-                company: `test company ${randomInt}`,
-                country: `test country ${randomInt}`,
-                city: `test city ${randomInt}`,
-                email: `test${randomInt}@nodejs.com`,
-            },
-            status: 'active',
-            subscribed_at: '2022-11-23 09:59:56'
-        };
+    expect(response.success).toBeTruthy();
+    if (response.success) {
+      expect(response.data).toBeDefined();
+      expect(response.data.data).toBeDefined();
+      expect(response.data.data.id).not.toBeNull();
+      expectTypeOf(response.data).toEqualTypeOf<SingleSubscriberResponse>();
+    }
+  });
 
-        try {
-            const response = await mailerlite.subscribers.update(createdSubscriberId,params);
+  await t.step("Fetch a subscriber by ID", async () => {
+    const response = await mailerlite.subscribers.find(createdSubscriberId);
 
-            expect(response).not.toBeNull();
-            expect(response.data).toBeDefined();
-            expect(response.data.data).toBeDefined();
-            expect(response.data.data.id).not.toBeNull();
-            expectTypeOf(response.data).toEqualTypeOf<SingleSubscriberResponse>()
-        } catch (error) {
-            handleCatchedError(error);
-        }
-    });
+    expect(response.success).toBeTruthy();
+    if (response.success) {
+      expect(response.data).toBeDefined();
+      expect(response.data.data).toBeDefined();
+      expect(response.data.data.id).not.toBeNull();
+      expectTypeOf(response.data).toEqualTypeOf<SingleSubscriberResponse>();
+    }
+  });
 
-    it("Fetch a subscriber by ID", async () => {
-        try {
-            const response = await mailerlite.subscribers.find(createdSubscriberId);
+  await t.step("Fetch total subscribers count", async () => {
+    const response = await mailerlite.subscribers.getCount();
 
-            expect(response).not.toBeNull();
-            expect(response.data).toBeDefined();
-            expect(response.data.data).toBeDefined();
-            expect(response.data.data.id).not.toBeNull();
-            expectTypeOf(response.data).toEqualTypeOf<SingleSubscriberResponse>()
-        } catch (error) {
-            handleCatchedError(error);
-        }
-    });
+    expect(response.success).toBeTruthy();
+    if (response.success) {
+      expect(response.data).toBeDefined();
+      expectTypeOf(response.data).toEqualTypeOf<CountSubscribersResponse>();
+    }
+  });
 
-    it.concurrent("Fetch total subscribers count", async () => {
-        try {
-            const response = await mailerlite.subscribers.getCount();
+  // Forget endpoint test skipped. If sub is forgotten, it can't be deleted
+  await t.step("Delete a subscriber", async () => {
+    const response = await mailerlite.subscribers.delete(createdSubscriberId);
 
-            expect(response).not.toBeNull();
-            expect(response.data).toBeDefined();
-            expectTypeOf(response.data).toEqualTypeOf<CountSubscribersResponse>()
-        } catch (error) {
-            handleCatchedError(error);
-        }
-    });
+    expect(response.success).toBeTruthy();
+    if (response.success) {
+      expect(response.data).toBeNull();
+    }
+  });
 
-    // Forget endpoint test skipped. If sub is forgotten, it can't be deleted
-
-    it("Delete a subscriber", async () => {
-        try {
-            const response = await mailerlite.subscribers.delete(createdSubscriberId);
-
-            expect(response).not.toBeNull();
-            expect(response.data).toBeDefined();
-        } catch (error) {
-            handleCatchedError(error);
-        }
-    });
-
+  await stopServer();
 });

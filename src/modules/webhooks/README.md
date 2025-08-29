@@ -1,7 +1,7 @@
 # Webhooks
 
-
 ### List all webhooks
+
 [Official Documentation](https://developers.mailerlite.com/docs/webhooks.html#list-all-webhooks)
 
 ---
@@ -17,19 +17,20 @@ mailerlite.webhooks.get()
 
 ### Get a webhook
 [Official Documentation](https://developers.mailerlite.com/docs/webhooks.html#get-a-webhook)
-
 ---
+
 ```javascript
 mailerlite.webhooks.find("WEBHOOK_ID")
-  .then(response => {
+  .then((response) => {
     console.log(response.data);
   })
-  .catch(error => {
+  .catch((error) => {
     if (error.response) console.log(error.response.data);
   });
 ```
 
 ### Create a webhook
+
 [Official Documentation](https://developers.mailerlite.com/docs/webhooks.html#create-a-webhook)
 
 ---
@@ -51,33 +52,35 @@ mailerlite.webhooks.create(params)
 
 ### Update a webhook
 [Official Documentation](https://developers.mailerlite.com/docs/webhooks.html#update-a-webhook)
-
 ---
+
 ```javascript
 const params = {
   name: "Test webhook updated",
-  enabled: false
+  enabled: false,
 };
 
 mailerlite.webhooks.update(params)
-  .then(response => {
+  .then((response) => {
     console.log(response.data);
   })
-  .catch(error => {
+  .catch((error) => {
     if (error.response) console.log(error.response.data);
   });
 ```
 
 ### Delete a webhook
+
 [Official Documentation](https://developers.mailerlite.com/docs/webhooks.html#delete-a-webhook)
 
 ---
+
 ```javascript
 mailerlite.webhooks.delete("WEBHOOK_ID")
-  .then(response => {
+  .then((response) => {
     console.log(response.data);
   })
-  .catch(error => {
+  .catch((error) => {
     if (error.response) console.log(error.response.data);
   });
 ```

@@ -1,6 +1,5 @@
 # Stats
 
-
 ### Get a list of sent campaigns
 
 ---
@@ -23,20 +22,21 @@ mailerlite.stats.getSentCampaigns(params)
 ```
 
 ### Get stats for a sent campaign
-
 ---
+
 ```javascript
 mailerlite.stats.getSentCampaignStats("CAMPAIGN_ID")
-  .then(stats => {
+  .then((stats) => {
     console.log(stats);
   })
-  .catch(error => {
+  .catch((error) => {
     if (error.response) console.log(error.response.data);
     console.log(error.message);
   });
 ```
 
-###  Get a subscribers of sent campaign
+### Get a subscribers of sent campaign
+
 [Official Documentation](https://developers.mailerlite.com/docs/campaigns.html#get-subscribers-activity-of-a-sent-campaign)
 
 ---
@@ -61,20 +61,20 @@ mailerlite.stats.getSentCampaignStats("CAMPAIGN_ID")
 
 ### Get a list of forms by type
 [Official Documentation](https://developers.mailerlite.com/docs/forms.html#list-all-forms)
-
 ---
+
 ```javascript
 const params = {
   sort: "created_at",
   limit: 10,
-  page: 1
+  page: 1,
 };
 
 mailerlite.stats.getFormsByType("FORM_TYPE", params)
-  .then(response => {
+  .then((response) => {
     console.log(response.data);
   })
-  .catch(error => {
+  .catch((error) => {
     if (error.response) console.log(error.response.data);
   });
 ```
@@ -95,28 +95,28 @@ mailerlite.stats.getFormsCountByType("FORM_TYPE")
 
 ### Get subscribers of a form
 [Official Documentation](https://developers.mailerlite.com/docs/forms.html#get-subscribers-who-signed-up-to-a-specific-form)
-
 ---
+
 ```javascript
 const params = {
   filter: {
     status: "active", // possible status: active, unsubscribed, unconfirmed, bounced, junk
   },
   limit: 10,
-  page:  1
-}
+  page: 1,
+};
 
 mailerlite.stats.getFormSubscribers("FORM_ID", params)
-  .then(response => {
+  .then((response) => {
     console.log(response.data);
   })
-  .catch(error => {
+  .catch((error) => {
     if (error.response) console.log(error.response.data);
   });
 ```
 
-
 ### List all automations
+
 [Official Documentation](https://developers.mailerlite.com/docs/automations.html#list-all-automations)
 
 ---
@@ -140,36 +140,38 @@ mailerlite.stats.getAutomations(params)
 ```
 
 ### Get stats for a specific automation
-
 ---
+
 ```javascript
 mailerlite.stats.getAutomationStats("AUTOMATION_ID")
-  .then(response => {
+  .then((response) => {
     console.log(response.data);
   })
-  .catch(error => {
+  .catch((error) => {
     if (error.response) console.log(error.response.data);
   });
 ```
 
 ### Get the subscriber activity for an automation
+
 [Official Documentation](https://developers.mailerlite.com/docs/automations.html#get-the-subscriber-activity-for-an-automation)
 
 ---
+
 ```javascript
 const params = {
   filter: {
-    status: "completed"
+    status: "completed",
   },
   limit: 10,
-  page: 1
+  page: 1,
 };
 
 mailerlite.stats.getAutomationSubscribers("AUTOMATION_ID", params)
-  .then(response => {
+  .then((response) => {
     console.log(response.data);
   })
-  .catch(error => {
+  .catch((error) => {
     if (error.response) console.log(error.response.data);
   });
 ```

@@ -1,73 +1,75 @@
-import { describe, it, expect, expectTypeOf } from "vitest";
-import "dotenv/config";
-import MailerLite from '../../index';
+import { expect } from "jsr:@std/expect";
+import { expectTypeOf } from "expect-type";
+import MailerLite from "../../index.ts";
 import {
-    FormTypes,
-    GetFormsParams,
-    ListFormsResponse,
-    SingleFormResponse
-} from "./forms.types";
-import {getRandomInt, handleCatchedError} from "../../utils/helpers";
+  FormTypes,
+  GetFormsParams,
+  ListFormsResponse,
+  SingleFormResponse,
+} from "./forms.types.ts";
+import { getRandomInt } from "../../utils/helpers.ts";
+import { startTalkbackServer } from "../../utils/setup-teardown-hooks.ts";
 
-const MAILERLITE_API_KEY = process.env.API_KEY as string;
+const MAILERLITE_API_KEY = Deno.env.get("API_KEY")!;
 
-if (!MAILERLITE_API_KEY)
-    throw "No MailerLite API key found in environment variables";
+if (!MAILERLITE_API_KEY) {
+  throw "No MailerLite API key found in environment variables";
+}
+const CUSTOM_MAILERLITE_URL = Deno.env.get("CUSTOM_MAILERLITE_URL")!;
 
-const mailerlite = new MailerLite({
+Deno.test("Forms", async (t) => {
+  let formId: string;
+
+  const mailerlite = new MailerLite({
     api_key: MAILERLITE_API_KEY,
-    base_path: "http://localhost:9090",
-});
+    base_path: CUSTOM_MAILERLITE_URL,
+  });
 
-describe("Forms", () => {
+  const stopServer = await startTalkbackServer();
 
-    let formId: string;
+  await t.step("List all forms", async () => {
+    const formType: FormTypes = "popup";
+    const params: GetFormsParams = {
+      limit: 25,
+      page: 1,
+      filter: {
+        name: "nodejs",
+      },
+      sort: "created_at",
+    };
 
-    it("List all forms", async () => {
-        const formType:FormTypes = "popup";
-        const params: GetFormsParams = {
-            limit: 25,
-            page: 1,
-            filter: {
-                name: "nodejs"
-            },
-            sort: "created_at"
-        };
+    const response = await mailerlite.forms.get(formType, params);
 
-        try {
-            const response = await mailerlite.forms.get(formType, params);
+    expect(response.success).toBe(true);
+    if (response.success) {
+      expect(response.data).toBeDefined();
+      expect(Array.isArray(response.data.data)).toBeTruthy();
+      expectTypeOf(response.data).toEqualTypeOf<ListFormsResponse>();
 
-            expect(response).not.toBeNull();
-            expect(response.data).toBeDefined();
-            expect(Array.isArray(response.data.data)).toBeTruthy();
-            expectTypeOf(response.data).toEqualTypeOf<ListFormsResponse>();
+      if (response.data.data.length) formId = response.data.data[0].id;
+    }
+  });
 
-            if (response.data.data.length) formId = response.data.data[0].id;
-        } catch (error) {
-            handleCatchedError(error);
-        }
-    });
+  await t.step("Update a form", async () => {
+    if (!formId) {
+      throw 'No forms found with name "nodejs"';
+    }
 
-    it("Update a form", async () => {
-        if (!formId) {
-            throw 'No forms found with name "nodejs"';
-        }
+    const randomInt = getRandomInt();
+    const params = {
+      name: `[Do not delete] nodejs popup ${randomInt}`,
+    };
 
-        const randomInt = getRandomInt();
-        const params = {
-            name: `[Do not delete] nodejs popup ${randomInt}`
-        }
+    const response = await mailerlite.forms.update(formId, params);
 
-        try {
-            const response = await mailerlite.forms.update(formId, params);
+    expect(response.success).toBe(true);
+    if (response.success) {
+      expect(response.data).toBeDefined();
+      expect(response.data.data).toBeDefined();
+      expect(response.data.data.id).not.toBeNull();
+      expectTypeOf(response.data).toEqualTypeOf<SingleFormResponse>();
+    }
+  });
 
-            expect(response).not.toBeNull();
-            expect(response.data).toBeDefined();
-            expect(response.data.data).toBeDefined();
-            expect(response.data.data.id).not.toBeNull();
-            expectTypeOf(response.data).toEqualTypeOf<SingleFormResponse>()
-        } catch (error) {
-            handleCatchedError(error);
-        }
-    });
+  await stopServer();
 });

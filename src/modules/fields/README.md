@@ -1,7 +1,7 @@
 # Fields
 
-
 ### List all fields
+
 [Official Documentation](https://developers.mailerlite.com/docs/fields.html#list-all-fields)
 
 ---
@@ -26,24 +26,25 @@ mailerlite.fields.get(params)
 
 ### Create a field
 [Official Documentation](https://developers.mailerlite.com/docs/fields.html#create-a-field)
-
 ---
+
 ```javascript
 const params = {
-  name: 'Test field',
-  type: 'text' // text, number, date
-}
+  name: "Test field",
+  type: "text", // text, number, date
+};
 
 mailerlite.fields.create(params)
-  .then(response => {
+  .then((response) => {
     console.log(response.data);
   })
-  .catch(error => {
+  .catch((error) => {
     if (error.response) console.log(error.response.data);
   });
 ```
 
 ### Update a field
+
 [Official Documentation](https://developers.mailerlite.com/docs/fields.html#update-a-field)
 
 ---
@@ -64,14 +65,14 @@ mailerlite.fields.update("FIELD_ID", params)
 
 ### Delete a field
 [Official Documentation](https://developers.mailerlite.com/docs/fields.html#delete-a-field)
-
 ---
+
 ```javascript
 mailerlite.fields.delete("FIELD_ID")
-  .then(response => {
+  .then((response) => {
     console.log(response.data);
   })
-  .catch(error => {
+  .catch((error) => {
     if (error.response) console.log(error.response.data);
   });
 ```

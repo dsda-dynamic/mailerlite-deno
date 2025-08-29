@@ -1,46 +1,52 @@
-import { AxiosResponse } from "axios";
-import {Links, Meta} from "../../utils/types.js";
+import { DiscriminatedResponse } from "../../utils/fetch.ts";
+import { Links, Meta } from "../../utils/types.ts";
 
 export interface WebhooksInterface {
-    get:            ()                              => Promise<AxiosResponse<ListAllWebhooksResponse>>;
-    find:           (webhook_id: string)            => Promise<AxiosResponse<SingleWebhookResponse>>;
-    create:         (params: CreateWebhookParams)   => Promise<AxiosResponse<SingleWebhookResponse, CreateWebhookParams>>;
-    update:         (webhook_id: string,
-                     params: UpdateWebhookParams)   => Promise<AxiosResponse<SingleWebhookResponse, UpdateWebhookParams>>;
-    delete:         (webhook_id: string)            => Promise<AxiosResponse<null>>;
+  get: () => Promise<DiscriminatedResponse<ListAllWebhooksResponse>>;
+  find: (
+    webhook_id: string,
+  ) => Promise<DiscriminatedResponse<SingleWebhookResponse>>;
+  create: (
+    params: CreateWebhookParams,
+  ) => Promise<DiscriminatedResponse<SingleWebhookResponse>>;
+  update: (
+    webhook_id: string,
+    params: UpdateWebhookParams,
+  ) => Promise<DiscriminatedResponse<SingleWebhookResponse>>;
+  delete: (webhook_id: string) => Promise<DiscriminatedResponse<null>>;
 }
 
 export interface ListAllWebhooksResponse {
-    data:   Array<WebhookObject>;
-    links:  Links;
-    meta:   Meta;
+  data: Array<WebhookObject>;
+  links: Links;
+  meta: Meta;
 }
 
 export interface SingleWebhookResponse {
-    data: WebhookObject;
+  data: WebhookObject;
 }
 
 export interface CreateWebhookParams {
-    name?:      string;
-    events:     Array<string>;
-    url:        string;
-    enabled?:   boolean;
+  name?: string;
+  events: Array<string>;
+  url: string;
+  enabled?: boolean;
 }
 
 export interface UpdateWebhookParams {
-    name?:      string;
-    events?:    Array<string>;
-    url?:       string;
-    enabled?:   boolean;
+  name?: string;
+  events?: Array<string>;
+  url?: string;
+  enabled?: boolean;
 }
 
 export interface WebhookObject {
-    id:         string;
-    name:       string;
-    url:        string;
-    events:     Array<string>;
-    enabled:    true;
-    secret:     string;
-    created_at: string;
-    updated_at: string;
+  id: string;
+  name: string;
+  url: string;
+  events: Array<string>;
+  enabled: true;
+  secret: string;
+  created_at: string;
+  updated_at: string;
 }

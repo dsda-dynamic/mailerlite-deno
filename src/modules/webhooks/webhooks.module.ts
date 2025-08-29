@@ -1,92 +1,98 @@
-import { validateId } from '../../utils/helpers.js';
-import request from '../../utils/fetch.js'
-
-import type { Config }  from '../../utils/types.js'
-import { AxiosResponse } from "axios";
+import { validateId } from "../../utils/helpers.ts";
 import {
-    WebhooksInterface,
-    ListAllWebhooksResponse,
-    SingleWebhookResponse,
-    CreateWebhookParams,
-    UpdateWebhookParams
-} from "./webhooks.types.js";
+  discriminatedRequest,
+  DiscriminatedResponse,
+} from "../../utils/fetch.ts";
+
+import type { Config } from "../../utils/types.ts";
+import {
+  CreateWebhookParams,
+  ListAllWebhooksResponse,
+  SingleWebhookResponse,
+  UpdateWebhookParams,
+  WebhooksInterface,
+} from "./webhooks.types.ts";
 
 export default class Webhook implements WebhooksInterface {
-    private config: Config;
+  private config: Config;
 
-    constructor(config: Config) {
-        this.config = config;
-    }
+  constructor(config: Config) {
+    this.config = config;
+  }
 
-    /**
-     * @description List all webhooks
-     *
-     * @see https://developers.mailerlite.com/docs/webhooks.html#list-all-webhooks
-     *
-     */
-    public get(): Promise<AxiosResponse<ListAllWebhooksResponse>> {
-        return request(`/api/webhooks`, {
-            method: "GET"
-        }, this.config);
-    }
+  /**
+   * @description List all webhooks
+   *
+   * @see https://developers.mailerlite.com/docs/webhooks.html#list-all-webhooks
+   */
+  public get(): Promise<DiscriminatedResponse<ListAllWebhooksResponse>> {
+    return discriminatedRequest<ListAllWebhooksResponse>(`/api/webhooks`, {
+      method: "GET",
+    }, this.config);
+  }
 
-    /**
-     * @description Get a webhook
-     *
-     * @see https://developers.mailerlite.com/docs/webhooks.html#get-a-webhook
-     *
-     * @webhook_id {String} - Webhook ID
-     */
-    public find(webhook_id: string): Promise<AxiosResponse<SingleWebhookResponse>> {
+  /**
+   * @description Get a webhook
+   *
+   * @see https://developers.mailerlite.com/docs/webhooks.html#get-a-webhook
+   *
+   * @webhook_id {String} - Webhook ID
+   */
+  public find(
+    webhook_id: string,
+  ): Promise<DiscriminatedResponse<SingleWebhookResponse>> {
+    validateId(webhook_id);
 
-        validateId(webhook_id);
+    return discriminatedRequest(`/api/webhooks/${webhook_id}`, {
+      method: "GET",
+    }, this.config);
+  }
 
-        return request(`/api/webhooks/${webhook_id}`, {
-            method: "GET"
-        }, this.config);
-    }
+  /**
+   * @description Create a webhook
+   *
+   * @see https://developers.mailerlite.com/docs/webhooks.html#create-a-webhook
+   *
+   * @requestBody {Object} - Webhook data for create
+   */
+  public create(
+    requestBody: CreateWebhookParams,
+  ): Promise<DiscriminatedResponse<SingleWebhookResponse>> {
+    return discriminatedRequest(`/api/webhooks`, {
+      method: "POST",
+      body: requestBody,
+    }, this.config);
+  }
 
-    /**
-     * @description Create a webhook
-     *
-     * @see https://developers.mailerlite.com/docs/webhooks.html#create-a-webhook
-     *
-     * @requestBody {Object} - Webhook data for create
-     */
-    public create(requestBody: CreateWebhookParams): Promise<AxiosResponse<SingleWebhookResponse, CreateWebhookParams>> {
-        return request(`/api/webhooks`, {
-            method: "POST",
-            body: requestBody
-        }, this.config);
-    }
+  /**
+   * @description Update a webhook
+   *
+   * @see https://developers.mailerlite.com/docs/webhooks.html#update-a-webhook
+   *
+   * @requestBody {Object} - Webhook data for update
+   */
+  public update(
+    webhook_id: string,
+    requestBody: UpdateWebhookParams,
+  ): Promise<DiscriminatedResponse<SingleWebhookResponse>> {
+    return discriminatedRequest(`/api/webhooks/${webhook_id}`, {
+      method: "PUT",
+      body: requestBody,
+    }, this.config);
+  }
 
-    /**
-     * @description Update a webhook
-     *
-     * @see https://developers.mailerlite.com/docs/webhooks.html#update-a-webhook
-     *
-     * @requestBody {Object} - Webhook data for update
-     */
-    public update(webhook_id: string, requestBody: UpdateWebhookParams): Promise<AxiosResponse<SingleWebhookResponse, UpdateWebhookParams>> {
-        return request(`/api/webhooks/${webhook_id}`, {
-            method: "PUT",
-            body: requestBody
-        }, this.config);
-    }
+  /**
+   * @description Delete a webhook
+   *
+   * @see https://developers.mailerlite.com/docs/webhooks.html#delete-a-webhook
+   *
+   * @webhook_id {String} - Webhook ID
+   */
+  public delete(webhook_id: string): Promise<DiscriminatedResponse<null>> {
+    validateId(webhook_id);
 
-    /**
-     * @description Delete a webhook
-     *
-     * @see https://developers.mailerlite.com/docs/webhooks.html#delete-a-webhook
-     *
-     * @webhook_id {String} - Webhook ID
-     */
-    public delete(webhook_id: string): Promise<AxiosResponse<null>> {
-
-        validateId(webhook_id);
-
-        return request(`/api/webhooks/${webhook_id}`, {
-            method: "DELETE"
-        }, this.config);
-    }
-};
+    return discriminatedRequest(`/api/webhooks/${webhook_id}`, {
+      method: "DELETE",
+    }, this.config);
+  }
+}

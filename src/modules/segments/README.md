@@ -1,7 +1,7 @@
 # Segments
 
-
 ### List all segments
+
 [Official Documentation](https://developers.mailerlite.com/docs/segments.html#list-all-segments)
 
 ---
@@ -22,27 +22,28 @@ mailerlite.segments.get(params)
 
 ### Get subscribers belonging to a segment
 [Official Documentation](https://developers.mailerlite.com/docs/segments.html#get-subscribers-belonging-to-a-segment)
-
 ---
+
 ```javascript
 const params = {
   filter: {
     status: "active",
   },
   limit: 5,
-  after: "SUBSCRIBER_ID"
-}
+  after: "SUBSCRIBER_ID",
+};
 
 mailerlite.segments.getSubscribers("SEGMENT_ID", params)
-  .then(response => {
+  .then((response) => {
     console.log(response.data);
   })
-  .catch(error => {
+  .catch((error) => {
     if (error.response) console.log(error.response.data);
   });
 ```
 
 ### Update segment
+
 [Official Documentation](https://developers.mailerlite.com/docs/segments.html#update-segment)
 
 ---
@@ -63,14 +64,14 @@ mailerlite.segments.update("SEGMENT_ID", params)
 
 ### Delete segment
 [Official Documentation](https://developers.mailerlite.com/docs/segments.html#delete-segment)
-
 ---
+
 ```javascript
 mailerlite.segments.delete("SEGMENT_ID")
-  .then(response => {
+  .then((response) => {
     console.log(response.data);
   })
-  .catch(error => {
+  .catch((error) => {
     if (error.response) console.log(error.response.data);
   });
 ```

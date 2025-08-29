@@ -4,7 +4,7 @@ export default defineConfig({
   clean: true,
   dts: true,
   entryPoints: {
-    index: "./src/index.ts"
+    index: "./src/index.ts",
   },
   format: ["cjs", "esm"],
   minify: true,

@@ -1,7 +1,7 @@
 # Groups
 
-
 ### List all groups
+
 [Official Documentation](https://developers.mailerlite.com/docs/groups.html#list-all-groups)
 
 ---
@@ -26,23 +26,24 @@ mailerlite.groups.get(params)
 
 ### Create a group
 [Official Documentation](https://developers.mailerlite.com/docs/groups.html#create-a-group)
-
 ---
+
 ```javascript
 const params = {
-  name: "Dummy group"
+  name: "Dummy group",
 };
 
 mailerlite.groups.create("GROUP_ID", params)
-  .then(response => {
+  .then((response) => {
     console.log(response.data);
   })
-  .catch(error => {
+  .catch((error) => {
     if (error.response) console.log(error.response.data);
   });
 ```
 
 ### Update a group
+
 [Official Documentation](https://developers.mailerlite.com/docs/groups.html#update-a-group)
 
 ---
@@ -62,19 +63,20 @@ mailerlite.groups.update("GROUP_ID", params)
 
 ### Delete group
 [Official Documentation](https://developers.mailerlite.com/docs/groups.html#delete-group)
-
 ---
+
 ```javascript
 mailerlite.groups.delete("GROUP_ID")
-  .then(response => {
+  .then((response) => {
     console.log(response.data);
   })
-  .catch(error => {
+  .catch((error) => {
     if (error.response) console.log(error.response.data);
   });
 ```
 
 ### Get subscribers belonging to a group
+
 [Official Documentation](https://developers.mailerlite.com/docs/groups.html#get-subscribers-belonging-to-a-group)
 
 ---
@@ -98,28 +100,30 @@ mailerlite.groups.getSubscribers("GROUP_ID", params)
 
 ### Assign subscriber to a group
 [Official Documentation](https://developers.mailerlite.com/docs/groups.html#assign-subscriber-to-a-group)
-
 ---
+
 ```javascript
 mailerlite.groups.assignSubscriber("SUBSCRIBER_ID", "GROUP_ID")
-  .then(response => {
+  .then((response) => {
     console.log(response.data);
   })
-  .catch(error => {
+  .catch((error) => {
     if (error.response) console.log(error.response.data);
   });
 ```
 
 ### Unassign subscriber from a group
+
 [Official Documentation](https://developers.mailerlite.com/docs/groups.html#unassign-subscriber-from-a-group)
 
 ---
+
 ```javascript
 mailerlite.groups.unAssignSubscriber("SUBSCRIBER_ID", "GROUP_ID")
-  .then(response => {
+  .then((response) => {
     console.log(response.data);
   })
-  .catch(error => {
+  .catch((error) => {
     if (error.response) console.log(error.response.data);
   });
 ```
