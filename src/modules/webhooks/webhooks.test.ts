@@ -1,7 +1,7 @@
 import { expectTypeOf } from "expect-type";
 import { expect } from "jsr:@std/expect";
 import MailerLite from "../../index.ts";
-import { getRandomInt, handleCatchedError } from "../../utils/helpers.ts";
+import { getRandomInt } from "../../utils/helpers.ts";
 import { startTalkbackServer } from "../../utils/setup-teardown-hooks.ts";
 import {
   CreateWebhookParams,
@@ -99,15 +99,11 @@ Deno.test("Webhooks", async (t) => {
   });
 
   await t.step("Delete a webhook", async () => {
-    try {
-      const response = await mailerlite.webhooks.delete(createdWebhookId);
+    const response = await mailerlite.webhooks.delete(createdWebhookId);
 
-      expect(response.success).toBeTruthy();
-      if (response.success) {
-        expect(response.data).toBeNull();
-      }
-    } catch (error) {
-      handleCatchedError(error);
+    expect(response.success).toBeTruthy();
+    if (response.success) {
+      expect(response.data).toBeNull();
     }
   });
 

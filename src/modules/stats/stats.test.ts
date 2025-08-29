@@ -1,6 +1,7 @@
-import { expect } from "jsr:@std/expect";
 import { expectTypeOf } from "expect-type";
+import { expect } from "jsr:@std/expect";
 import MailerLite from "../../index.ts";
+import { startTalkbackServer } from "../../utils/setup-teardown-hooks.ts";
 import {
   AutomationSubsParams,
   AutomationSubsResponse,
@@ -13,18 +14,16 @@ import {
   ListCampaignsResponse,
 } from "../campaigns/campaigns.types.ts";
 import {
-  CampaignSubscribersActivityParams,
-  CampaignSubscribersActivityResponse,
-  FormsSubscribersParams,
-} from "./stats.types.ts";
-import {
   FormTypes,
   GetFormsParams,
   ListFormsResponse,
 } from "../forms/forms.types.ts";
 import { ListSubscribersResponse } from "../subscribers/subscribers.types.ts";
-import { handleCatchedError } from "../../utils/helpers.ts";
-import { startTalkbackServer } from "../../utils/setup-teardown-hooks.ts";
+import {
+  CampaignSubscribersActivityParams,
+  CampaignSubscribersActivityResponse,
+  FormsSubscribersParams,
+} from "./stats.types.ts";
 
 const MAILERLITE_API_KEY = Deno.env.get("API_KEY")!;
 
@@ -56,35 +55,27 @@ Deno.test("Stats", async (t) => {
       page: 1,
     };
 
-    try {
-      const response = await mailerlite.stats.getSentCampaigns(params);
+    const response = await mailerlite.stats.getSentCampaigns(params);
 
-      expect(response).not.toBeNull();
-      expect(response.data).toBeDefined();
-      expect(Array.isArray(response.data)).toBeTruthy();
-      expectTypeOf(response).toEqualTypeOf<ListCampaignsResponse>();
+    expect(response).not.toBeNull();
+    expect(response.data).toBeDefined();
+    expect(Array.isArray(response.data)).toBeTruthy();
+    expectTypeOf(response).toEqualTypeOf<ListCampaignsResponse>();
 
-      if (response.data.length) campaignId = response.data[0].id;
-    } catch (error) {
-      handleCatchedError(error);
-    }
+    if (response.data.length) campaignId = response.data[0].id;
   });
 
   await t.step("Get stats for a sent campaign", async () => {
     if (!campaignId) {
       throw "No campaign found. Wrong test setup.";
     }
-    try {
-      const response = await mailerlite.stats.getSentCampaignStats(campaignId);
+    const response = await mailerlite.stats.getSentCampaignStats(campaignId);
 
-      expect(response).not.toBeNull();
-      expect(response).toBeDefined();
-      expectTypeOf(response).toEqualTypeOf<
-        CampaignStats
-      >();
-    } catch (error) {
-      handleCatchedError(error);
-    }
+    expect(response).not.toBeNull();
+    expect(response).toBeDefined();
+    expectTypeOf(response).toEqualTypeOf<
+      CampaignStats
+    >();
   });
 
   await t.step("Get subscribers of sent campaign", async () => {
@@ -101,22 +92,18 @@ Deno.test("Stats", async (t) => {
       page: 1,
     };
 
-    try {
-      const response = await mailerlite.stats.getSentCampaignSubscribers(
-        campaignId,
-        params,
-      );
+    const response = await mailerlite.stats.getSentCampaignSubscribers(
+      campaignId,
+      params,
+    );
 
-      expect(response.success).toBe(true);
-      if (response.success) {
-        expect(response.data).toBeDefined();
-        expect(Array.isArray(response.data.data)).toBeTruthy();
-        expectTypeOf(response.data).toEqualTypeOf<
-          CampaignSubscribersActivityResponse
-        >();
-      }
-    } catch (error) {
-      handleCatchedError(error);
+    expect(response.success).toBe(true);
+    if (response.success) {
+      expect(response.data).toBeDefined();
+      expect(Array.isArray(response.data.data)).toBeTruthy();
+      expectTypeOf(response.data).toEqualTypeOf<
+        CampaignSubscribersActivityResponse
+      >();
     }
   });
 
@@ -132,33 +119,25 @@ Deno.test("Stats", async (t) => {
       sort: "created_at",
     };
 
-    try {
-      const response = await mailerlite.stats.getFormsByType(formType, params);
+    const response = await mailerlite.stats.getFormsByType(formType, params);
 
-      expect(response.success).toBe(true);
-      if (response.success) {
-        expect(response.data).toBeDefined();
-        expect(Array.isArray(response.data.data)).toBeTruthy();
-        expectTypeOf(response.data).toEqualTypeOf<ListFormsResponse>();
+    expect(response.success).toBe(true);
+    if (response.success) {
+      expect(response.data).toBeDefined();
+      expect(Array.isArray(response.data.data)).toBeTruthy();
+      expectTypeOf(response.data).toEqualTypeOf<ListFormsResponse>();
 
-        if (response.data.data.length) formId = response.data.data[0].id;
-      }
-    } catch (error) {
-      handleCatchedError(error);
+      if (response.data.data.length) formId = response.data.data[0].id;
     }
   });
 
   await t.step("Get a stats (count) of a form by type", async () => {
     const formType: FormTypes = "popup";
-    try {
-      const response = await mailerlite.stats.getFormsCountByType(formType);
+    const response = await mailerlite.stats.getFormsCountByType(formType);
 
-      expect(response).not.toBeNull();
-      expect(response).toBeDefined();
-      expectTypeOf(response).toEqualTypeOf<number>();
-    } catch (error) {
-      handleCatchedError(error);
-    }
+    expect(response).not.toBeNull();
+    expect(response).toBeDefined();
+    expectTypeOf(response).toEqualTypeOf<number>();
   });
 
   await t.step("Get subscribers of a form", async () => {
@@ -170,20 +149,16 @@ Deno.test("Stats", async (t) => {
       page: 1,
     };
 
-    try {
-      const response = await mailerlite.stats.getFormSubscribers(
-        formId,
-        params,
-      );
+    const response = await mailerlite.stats.getFormSubscribers(
+      formId,
+      params,
+    );
 
-      expect(response.success).toBe(true);
-      if (response.success) {
-        expect(response.data).toBeDefined();
-        expect(Array.isArray(response.data.data)).toBeTruthy();
-        expectTypeOf(response.data).toEqualTypeOf<ListSubscribersResponse>();
-      }
-    } catch (error) {
-      handleCatchedError(error);
+    expect(response.success).toBe(true);
+    if (response.success) {
+      expect(response.data).toBeDefined();
+      expect(Array.isArray(response.data.data)).toBeTruthy();
+      expectTypeOf(response.data).toEqualTypeOf<ListSubscribersResponse>();
     }
   });
 
@@ -198,19 +173,15 @@ Deno.test("Stats", async (t) => {
       page: 1,
     };
 
-    try {
-      const response = await mailerlite.stats.getAutomations(params);
+    const response = await mailerlite.stats.getAutomations(params);
 
-      expect(response.success).toBe(true);
-      if (response.success) {
-        expect(response.data).toBeDefined();
-        expect(Array.isArray(response.data.data)).toBeTruthy();
-        expectTypeOf(response.data).toEqualTypeOf<ListAutomationsResponse>();
+    expect(response.success).toBe(true);
+    if (response.success) {
+      expect(response.data).toBeDefined();
+      expect(Array.isArray(response.data.data)).toBeTruthy();
+      expectTypeOf(response.data).toEqualTypeOf<ListAutomationsResponse>();
 
-        if (response.data.data.length) automationId = response.data.data[0].id;
-      }
-    } catch (error) {
-      handleCatchedError(error);
+      if (response.data.data.length) automationId = response.data.data[0].id;
     }
   });
 
@@ -219,14 +190,10 @@ Deno.test("Stats", async (t) => {
       throw "No automation found. Wrong test setup.";
     }
 
-    try {
-      const response = await mailerlite.stats.getAutomationStats(automationId);
+    const response = await mailerlite.stats.getAutomationStats(automationId);
 
-      expect(response).not.toBeNull();
-      expect(response).toBeDefined();
-    } catch (error) {
-      handleCatchedError(error);
-    }
+    expect(response).not.toBeNull();
+    expect(response).toBeDefined();
   });
 
   await t.step("Get the subscriber activity for an automation", async () => {
@@ -241,21 +208,17 @@ Deno.test("Stats", async (t) => {
       page: 1,
     };
 
-    try {
-      const response = await mailerlite.stats.getAutomationSubscribers(
-        automationId,
-        params,
-      );
+    const response = await mailerlite.stats.getAutomationSubscribers(
+      automationId,
+      params,
+    );
 
-      expect(response.success).toBe(true);
-      if (response.success) {
-        expect(response.data).toBeDefined();
-        expect(response.data.data).toBeDefined();
-        expect(Array.isArray(response.data.data)).toBeTruthy();
-        expectTypeOf(response.data).toEqualTypeOf<AutomationSubsResponse>();
-      }
-    } catch (error) {
-      handleCatchedError(error);
+    expect(response.success).toBe(true);
+    if (response.success) {
+      expect(response.data).toBeDefined();
+      expect(response.data.data).toBeDefined();
+      expect(Array.isArray(response.data.data)).toBeTruthy();
+      expectTypeOf(response.data).toEqualTypeOf<AutomationSubsResponse>();
     }
   });
 
