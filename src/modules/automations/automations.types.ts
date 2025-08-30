@@ -1,6 +1,6 @@
-import { DiscriminatedResponse } from "../../utils/fetch.ts";
-import { Links, Meta, Stats } from "../../utils/types.ts";
-import { Email } from "../campaigns/campaigns.types.ts";
+import type { DiscriminatedResponse } from "../../utils/fetch.ts";
+import type { Links, Meta, Stats } from "../../utils/types.ts";
+import type { Email } from "../campaigns/campaigns.types.ts";
 
 export interface AutomationsInterface {
   get: (

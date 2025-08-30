@@ -1,7 +1,7 @@
 import { validateId } from "../../utils/helpers.ts";
 import {
   discriminatedRequest,
-  DiscriminatedResponse,
+  type DiscriminatedResponse,
 } from "../../utils/fetch.ts";
 
 import type { Config } from "../../utils/types.ts";

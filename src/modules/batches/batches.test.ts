@@ -1,7 +1,7 @@
 import { expect } from "jsr:@std/expect";
 import { expectTypeOf } from "expect-type";
 import MailerLite from "../../index.ts";
-import { BatchParams, BatchResponses } from "./batches.types.ts";
+import type { BatchParams, BatchResponses } from "./batches.types.ts";
 import { startTalkbackServer } from "../../utils/setup-teardown-hooks.ts";
 
 const MAILERLITE_API_KEY = Deno.env.get("API_KEY");

@@ -1,4 +1,4 @@
-import { Config } from "./types.ts";
+import type { Config } from "./types.ts";
 
 interface Options {
   headers?: object;

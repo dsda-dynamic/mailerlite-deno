@@ -1,40 +1,40 @@
-import { Config } from "./utils/types.ts";
+import type { Config } from "./utils/types.ts";
 
 import Subscriber from "./modules/subscribers/subscribers.module.ts";
-import { SubscriberInterface } from "./modules/subscribers/subscribers.types.ts";
+import type { SubscriberInterface } from "./modules/subscribers/subscribers.types.ts";
 
 import Campaign from "./modules/campaigns/campaigns.module.ts";
-import { CampaignsInterface } from "./modules/campaigns/campaigns.types.ts";
+import type { CampaignsInterface } from "./modules/campaigns/campaigns.types.ts";
 
 import Form from "./modules/forms/forms.module.ts";
-import { FormsInterface } from "./modules/forms/forms.types.ts";
+import type { FormsInterface } from "./modules/forms/forms.types.ts";
 
 import Group from "./modules/groups/groups.module.ts";
-import { GroupsInterface } from "./modules/groups/groups.types.ts";
+import type { GroupsInterface } from "./modules/groups/groups.types.ts";
 
 import Segment from "./modules/segments/segments.module.ts";
-import { SegmentsInterface } from "./modules/segments/segments.types.ts";
+import type { SegmentsInterface } from "./modules/segments/segments.types.ts";
 
 import Field from "./modules/fields/fields.module.ts";
-import { FieldsInterface } from "./modules/fields/fields.types.ts";
+import type { FieldsInterface } from "./modules/fields/fields.types.ts";
 
 import Automation from "./modules/automations/automations.module.ts";
-import { AutomationsInterface } from "./modules/automations/automations.types.ts";
+import type { AutomationsInterface } from "./modules/automations/automations.types.ts";
 
 import Timezone from "./modules/timezones/timezones.module.ts";
-import { TimezonesInterface } from "./modules/timezones/timezones.types.ts";
+import type { TimezonesInterface } from "./modules/timezones/timezones.types.ts";
 
 import Language from "./modules/languages/languages.module.ts";
-import { LanguagesInterface } from "./modules/languages/languages.types.ts";
+import type { LanguagesInterface } from "./modules/languages/languages.types.ts";
 
 import Batch from "./modules/batches/batches.module.ts";
-import { BatchesInterface } from "./modules/batches/batches.types.ts";
+import type { BatchesInterface } from "./modules/batches/batches.types.ts";
 
 import Webhook from "./modules/webhooks/webhooks.module.ts";
-import { WebhooksInterface } from "./modules/webhooks/webhooks.types.ts";
+import type { WebhooksInterface } from "./modules/webhooks/webhooks.types.ts";
 
 import Statistics from "./modules/stats/stats.module.ts";
-import { StatsInterface } from "./modules/stats/stats.types.ts";
+import type { StatsInterface } from "./modules/stats/stats.types.ts";
 
 export default class MailerLite {
   private config: Config;

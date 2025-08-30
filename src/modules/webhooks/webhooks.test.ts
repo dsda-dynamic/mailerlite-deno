@@ -3,7 +3,7 @@ import { expect } from "jsr:@std/expect";
 import MailerLite from "../../index.ts";
 import { getRandomInt } from "../../utils/helpers.ts";
 import { startTalkbackServer } from "../../utils/setup-teardown-hooks.ts";
-import {
+import type {
   CreateWebhookParams,
   ListAllWebhooksResponse,
   SingleWebhookResponse,

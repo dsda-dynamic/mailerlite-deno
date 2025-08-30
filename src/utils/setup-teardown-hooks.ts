@@ -1,6 +1,6 @@
 import tb from "npm:talkback";
-import { Req, Talkback } from "npm:talkback/types";
-import Tape from "npm:talkback/tape";
+import type { Req, Talkback } from "npm:talkback/types";
+import type Tape from "npm:talkback/tape";
 import path from "node:path";
 import console from "node:console";
 const talkback = tb as unknown as Talkback;

@@ -1,10 +1,10 @@
 import {
   discriminatedRequest,
-  DiscriminatedResponse,
+  type DiscriminatedResponse,
 } from "../../utils/fetch.ts";
 
 import type { Config } from "../../utils/types.ts";
-import {
+import type {
   ListAllTimezonesResponse,
   TimezonesInterface,
 } from "./timezones.types.ts";

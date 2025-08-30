@@ -1,30 +1,30 @@
 import { validateId } from "../../utils/helpers.ts";
 import request, {
   discriminatedRequest,
-  DiscriminatedResponse,
-  FetchResponse,
+  type DiscriminatedResponse,
+  type FetchResponse,
   unwrapIfOk,
 } from "../../utils/fetch.ts";
 
 import type { Config } from "../../utils/types.ts";
-import {
+import type {
   CampaignSubscribersActivityParams,
   CampaignSubscribersActivityResponse,
   StatsInterface,
 } from "./stats.types.ts";
-import {
+import type {
   CampaignStats,
   GetCampaignsParams,
   ListCampaignsResponse,
 } from "../campaigns/campaigns.types.ts";
-import {
+import type {
   FormTypes,
   GetFormsParams,
   ListFormsResponse,
 } from "../forms/forms.types.ts";
-import { FormsSubscribersParams } from "./stats.types.ts";
-import { ListSubscribersResponse } from "../subscribers/subscribers.types.ts";
-import {
+import type { FormsSubscribersParams } from "./stats.types.ts";
+import type { ListSubscribersResponse } from "../subscribers/subscribers.types.ts";
+import type {
   AutomationStats,
   AutomationSubsParams,
   AutomationSubsResponse,

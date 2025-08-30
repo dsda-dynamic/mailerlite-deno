@@ -1,5 +1,5 @@
-import { DiscriminatedResponse } from "../../utils/fetch.ts";
-import { Links, SubscriberObject } from "../../utils/types.ts";
+import type { DiscriminatedResponse } from "../../utils/fetch.ts";
+import type { Links, SubscriberObject } from "../../utils/types.ts";
 
 export interface SubscriberInterface {
   get: (

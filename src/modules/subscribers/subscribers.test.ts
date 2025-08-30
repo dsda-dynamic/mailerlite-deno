@@ -3,7 +3,7 @@ import { expectTypeOf } from "expect-type";
 
 import MailerLite from "../../index.ts";
 import { getRandomInt } from "../../utils/helpers.ts";
-import {
+import type {
   CountSubscribersResponse,
   CreateOrUpdateSubscriberParams,
   GetSubscribersParams,

@@ -1,23 +1,23 @@
-import {
+import type {
   CampaignStats,
   GetCampaignsParams,
   ListCampaignsResponse,
 } from "../campaigns/campaigns.types.ts";
-import {
+import type {
   FormTypes,
   GetFormsParams,
   ListFormsResponse,
 } from "../forms/forms.types.ts";
-import { ListSubscribersResponse } from "../subscribers/subscribers.types.ts";
-import {
+import type { ListSubscribersResponse } from "../subscribers/subscribers.types.ts";
+import type {
   AutomationStats,
   AutomationSubsParams,
   AutomationSubsResponse,
   GetAutomationsParams,
   ListAutomationsResponse,
 } from "../automations/automations.types.ts";
-import { Links, Meta, SubscriberObject } from "../../utils/types.ts";
-import { DiscriminatedResponse, FetchResponse } from "../../utils/fetch.ts";
+import type { Links, Meta, SubscriberObject } from "../../utils/types.ts";
+import type { DiscriminatedResponse, FetchResponse } from "../../utils/fetch.ts";
 
 export interface StatsInterface {
   getSentCampaigns: (

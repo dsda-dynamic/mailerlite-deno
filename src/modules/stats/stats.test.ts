@@ -2,24 +2,24 @@ import { expectTypeOf } from "expect-type";
 import { expect } from "jsr:@std/expect";
 import MailerLite from "../../index.ts";
 import { startTalkbackServer } from "../../utils/setup-teardown-hooks.ts";
-import {
+import type {
   AutomationSubsParams,
   AutomationSubsResponse,
   GetAutomationsParams,
   ListAutomationsResponse,
 } from "../automations/automations.types.ts";
-import {
+import type {
   CampaignStats,
   GetCampaignsParams,
   ListCampaignsResponse,
 } from "../campaigns/campaigns.types.ts";
-import {
+import type {
   FormTypes,
   GetFormsParams,
   ListFormsResponse,
 } from "../forms/forms.types.ts";
-import { ListSubscribersResponse } from "../subscribers/subscribers.types.ts";
-import {
+import type { ListSubscribersResponse } from "../subscribers/subscribers.types.ts";
+import type {
   CampaignSubscribersActivityParams,
   CampaignSubscribersActivityResponse,
   FormsSubscribersParams,

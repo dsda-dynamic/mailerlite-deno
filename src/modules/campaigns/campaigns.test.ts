@@ -1,7 +1,7 @@
 import { expect } from "jsr:@std/expect";
 import { expectTypeOf } from "expect-type";
 import MailerLite from "../../index.ts";
-import {
+import type {
   CreateUpdateCampaignParams,
   GetCampaignsParams,
   ListCampaignsResponse,

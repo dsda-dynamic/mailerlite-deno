@@ -1,4 +1,4 @@
-import { DiscriminatedResponse } from "../../utils/fetch.ts";
+import type { DiscriminatedResponse } from "../../utils/fetch.ts";
 
 export interface TimezonesInterface {
   get: () => Promise<DiscriminatedResponse<ListAllTimezonesResponse>>;

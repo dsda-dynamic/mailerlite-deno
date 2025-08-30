@@ -1,4 +1,4 @@
-import { GroupObject } from "../modules/groups/groups.types.ts";
+import type { GroupObject } from "../modules/groups/groups.types.ts";
 
 export interface Config {
   basePath: string;

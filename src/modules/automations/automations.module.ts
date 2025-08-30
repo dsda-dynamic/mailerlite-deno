@@ -1,11 +1,11 @@
 import {
   discriminatedRequest,
-  DiscriminatedResponse,
+  type DiscriminatedResponse,
 } from "../../utils/fetch.ts";
 import { validateId } from "../../utils/helpers.ts";
 
-import { Config } from "../../utils/types.ts";
-import {
+import type { Config } from "../../utils/types.ts";
+import type {
   AutomationsInterface,
   AutomationSubsParams,
   AutomationSubsResponse,
