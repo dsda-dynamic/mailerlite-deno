@@ -38,6 +38,7 @@ jobs:
           registry-url: "https://registry.npmjs.org"
       - name: Convert to NPM package
         run: deno run -A scripts/build_npm.ts ${{ github.ref_name }}
-      - run: npm --version
+      - name: Install npm@^11.5.1
+        run: npm install -g npm@^11.5.1
       - name: Publish to NPM
         run: cd npm && npm publish --provenance --access public
