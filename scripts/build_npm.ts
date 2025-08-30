@@ -21,7 +21,7 @@ await build({
     license: "MIT",
     repository: {
       type: "git",
-      url: "https://github.com/dsda-dynamic/mailerlite-deno.git",
+      url: "git+https://github.com/dsda-dynamic/mailerlite-deno.git",
     },
     bugs: {
       url: "https://github.com/dsda-dynamic/mailerlite-deno/issues",

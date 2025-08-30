@@ -11,6 +11,7 @@ permissions:
 jobs:
   publish-jsr:
     runs-on: ubuntu-latest
+    environment: publishing
     permissions:
       contents: read
       id-token: write
@@ -21,6 +22,7 @@ jobs:
 
   publish-npm:
     runs-on: ubuntu-latest
+    environment: publishing
     permissions:
       contents: read
       id-token: write
