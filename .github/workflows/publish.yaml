@@ -1,4 +1,4 @@
-name: NPM Publish
+name: Publish Packages
 on:
   push:
     tags:
@@ -37,4 +37,4 @@ jobs:
       - name: Convert to NPM package
         run: deno run -A scripts/build_npm.ts ${{ github.ref_name }}
       - name: Publish to NPM
-        run: npm publish --provenance --access public
+        run: cd npm && npm publish --provenance --access public
