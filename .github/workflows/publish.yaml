@@ -17,6 +17,12 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v4
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Update version in deno.json
+        run: jq --arg version "${{ github.ref_name }}" '.version = $version' deno.json > deno.json.tmp && mv deno.json.tmp deno.json
       - name: Publish package
         run: npx jsr publish
 
