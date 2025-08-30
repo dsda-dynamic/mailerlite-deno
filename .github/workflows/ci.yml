@@ -43,13 +43,3 @@ jobs:
 
       - name: Run tests
         run: deno test --allow-env --env-file=.env.example --allow-net --allow-write --allow-read
-
-  publish:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
-    steps:
-      - uses: actions/checkout@v4
-      - name: Publish package
-        run: npx jsr publish
