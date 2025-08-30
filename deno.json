@@ -1,4 +1,8 @@
 {
+  "name": "@dsdadynamic/mailerlite",
+  "version": "0.1.0",
+  "license": "MIT",
+  "exports": "./src/index.ts",
   "imports": {
     "tsup": "npm:tsup@^6.7.0",
     "expect-type": "npm:expect-type@^1.2.2"
