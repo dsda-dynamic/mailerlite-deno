@@ -24,7 +24,7 @@ jobs:
       - name: Update version in deno.json
         run: jq --arg version "${{ github.ref_name }}" '.version = $version' deno.json > deno.json.tmp && mv deno.json.tmp deno.json
       - name: Publish package
-        run: npx jsr publish
+        run: npx jsr publish --allow-dirty
 
   publish-npm:
     runs-on: ubuntu-latest
