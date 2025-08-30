@@ -17,7 +17,10 @@ import type {
   ListAutomationsResponse,
 } from "../automations/automations.types.ts";
 import type { Links, Meta, SubscriberObject } from "../../utils/types.ts";
-import type { DiscriminatedResponse, FetchResponse } from "../../utils/fetch.ts";
+import type {
+  DiscriminatedResponse,
+  FetchResponse,
+} from "../../utils/fetch.ts";
 
 export interface StatsInterface {
   getSentCampaigns: (
