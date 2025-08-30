@@ -22,13 +22,6 @@ export default class Group implements GroupsInterface {
     this.config = config;
   }
 
-  /**
-   * @description List all groups
-   *
-   * @see https://developers.mailerlite.com/docs/groups.html#list-all-groups
-   *
-   * @params {Object} - List groups params
-   */
   public get(
     params: GetGroupsParams,
   ): Promise<DiscriminatedResponse<ListAllGroupsResponse>> {
@@ -38,13 +31,6 @@ export default class Group implements GroupsInterface {
     }, this.config);
   }
 
-  /**
-   * @description Create a group
-   *
-   * @see https://developers.mailerlite.com/docs/groups.html#create-a-group
-   *
-   * @requestBody {Object} - Campaign data for create
-   */
   public create(
     requestBody: CreateUpdateGroupParams,
   ): Promise<DiscriminatedResponse<SingleGroupResponse>> {
@@ -54,14 +40,6 @@ export default class Group implements GroupsInterface {
     }, this.config);
   }
 
-  /**
-   * @description Update a group
-   *
-   * @see https://developers.mailerlite.com/docs/groups.html#update-a-group
-   *
-   * @group_id {String} - Group ID
-   * @requestBody {Object} - Group data for update
-   */
   public update(
     group_id: string,
     requestBody: CreateUpdateGroupParams,
@@ -78,13 +56,6 @@ export default class Group implements GroupsInterface {
     );
   }
 
-  /**
-   * @description Delete a group
-   *
-   * @see https://developers.mailerlite.com/docs/groups.html#delete-group
-   *
-   * @group_id {String} - Group ID
-   */
   public delete(
     group_id: string,
   ): Promise<DiscriminatedResponse<SingleGroupResponse>> {
@@ -99,14 +70,6 @@ export default class Group implements GroupsInterface {
     );
   }
 
-  /**
-   * @description Get subscribers belonging to a group
-   *
-   * @see https://developers.mailerlite.com/docs/groups.html#get-subscribers-belonging-to-a-group
-   *
-   * @group_id {String} - Group ID
-   * @params {Object} - List subscribers params
-   */
   public getSubscribers(
     group_id: string,
     params: SubscriberParams,
@@ -123,14 +86,6 @@ export default class Group implements GroupsInterface {
     );
   }
 
-  /**
-   * @description Assign subscriber to a group
-   *
-   * @see https://developers.mailerlite.com/docs/groups.html#assign-subscriber-to-a-group
-   *
-   * @subscriber_id {String} - Subscriber ID
-   * @group_id {String} - Group ID
-   */
   public assignSubscriber(
     subscriber_id: string,
     group_id: string,
@@ -147,14 +102,6 @@ export default class Group implements GroupsInterface {
     );
   }
 
-  /**
-   * @description Unassign subscriber from a group
-   *
-   * @see https://developers.mailerlite.com/docs/groups.html#unassign-subscriber-from-a-group
-   *
-   * @subscriber_id {String} - Subscriber ID
-   * @group_id {String} - Group ID
-   */
   public unAssignSubscriber(
     subscriber_id: string,
     group_id: string,

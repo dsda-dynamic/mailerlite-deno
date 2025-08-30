@@ -2,27 +2,80 @@ import type { DiscriminatedResponse } from "../../utils/fetch.ts";
 import type { Links, Meta, SubscriberObject } from "../../utils/types.ts";
 
 export interface GroupsInterface {
+  /**
+   * @description List all groups
+   *
+   * @see https://developers.mailerlite.com/docs/groups.html#list-all-groups
+   *
+   * @params {Object} - List groups params
+   */
   get: (
     params: GetGroupsParams,
   ) => Promise<DiscriminatedResponse<ListAllGroupsResponse>>;
+  /**
+   * @description Create a group
+   *
+   * @see https://developers.mailerlite.com/docs/groups.html#create-a-group
+   *
+   * @requestBody {Object} - Campaign data for create
+   */
   create: (
     params: CreateUpdateGroupParams,
   ) => Promise<DiscriminatedResponse<SingleGroupResponse>>;
+  /**
+   * @description Update a group
+   *
+   * @see https://developers.mailerlite.com/docs/groups.html#update-a-group
+   *
+   * @group_id {String} - Group ID
+   * @requestBody {Object} - Group data for update
+   */
   update: (
     group_id: string,
     params: CreateUpdateGroupParams,
   ) => Promise<DiscriminatedResponse<SingleGroupResponse>>;
+  /**
+   * @description Delete a group
+   *
+   * @see https://developers.mailerlite.com/docs/groups.html#delete-group
+   *
+   * @group_id {String} - Group ID
+   */
   delete: (
     group_id: string,
   ) => Promise<DiscriminatedResponse<SingleGroupResponse>>;
+  /**
+   * @description Get subscribers belonging to a group
+   *
+   * @see https://developers.mailerlite.com/docs/groups.html#get-subscribers-belonging-to-a-group
+   *
+   * @group_id {String} - Group ID
+   * @params {Object} - List subscribers params
+   */
   getSubscribers: (
     group_id: string,
     params: SubscriberParams,
   ) => Promise<DiscriminatedResponse<ListAllSubscribersResponse>>;
+  /**
+   * @description Assign subscriber to a group
+   *
+   * @see https://developers.mailerlite.com/docs/groups.html#assign-subscriber-to-a-group
+   *
+   * @subscriber_id {String} - Subscriber ID
+   * @group_id {String} - Group ID
+   */
   assignSubscriber: (
     subscriber_id: string,
     group_id: string,
   ) => Promise<DiscriminatedResponse<SingleGroupResponse>>;
+  /**
+   * @description Unassign subscriber from a group
+   *
+   * @see https://developers.mailerlite.com/docs/groups.html#unassign-subscriber-from-a-group
+   *
+   * @subscriber_id {String} - Subscriber ID
+   * @group_id {String} - Group ID
+   */
   unAssignSubscriber: (
     subscriber_id: string,
     group_id: string,

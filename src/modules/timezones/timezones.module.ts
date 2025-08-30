@@ -16,11 +16,6 @@ export default class Timezone implements TimezonesInterface {
     this.config = config;
   }
 
-  /**
-   * @description List all timezones
-   *
-   * @see https://developers.mailerlite.com/docs/timezones.html#response
-   */
   public get(): Promise<DiscriminatedResponse<ListAllTimezonesResponse>> {
     return discriminatedRequest<ListAllTimezonesResponse>(`/api/timezones`, {
       method: "GET",

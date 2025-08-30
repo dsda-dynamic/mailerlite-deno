@@ -2,26 +2,77 @@ import type { DiscriminatedResponse } from "../../utils/fetch.ts";
 import type { Links, Meta, Stats } from "../../utils/types.ts";
 
 export interface CampaignsInterface {
+  /**
+   * @description List campaigns
+   *
+   * @see https://developers.mailerlite.com/docs/campaigns.html#campaign-list
+   *
+   * @params {Object} - List campaigns params
+   */
   get: (
     params: GetCampaignsParams,
   ) => Promise<DiscriminatedResponse<ListCampaignsResponse>>;
+  /**
+   * @description Fetch a campaign by ID
+   *
+   * @see https://developers.mailerlite.com/docs/campaigns.html#get-a-campaign
+   *
+   * @campaign_id {String} - Campaign ID
+   */
   find: (
     campaign_id: string,
   ) => Promise<DiscriminatedResponse<SingleCampaignResponse>>;
+  /**
+   * @description Create a campaign
+   *
+   * @see https://developers.mailerlite.com/docs/campaigns.html#create-a-campaign
+   *
+   * @requestBody {Object} - Campaign data for create
+   */
   create: (
     params: CreateUpdateCampaignParams,
   ) => Promise<DiscriminatedResponse<SingleCampaignResponse>>;
+  /**
+   * @description Update a campaign
+   *
+   * @see https://developers.mailerlite.com/docs/campaigns.html#update-campaign
+   *
+   * @campaign_id {String} - Campaign ID
+   * @requestBody {Object} - Campaign data for update
+   */
   update: (
     campaign_id: string,
     params: CreateUpdateCampaignParams,
   ) => Promise<DiscriminatedResponse<SingleCampaignResponse>>;
+  /**
+   * @description Schedule a campaign
+   *
+   * @see https://developers.mailerlite.com/docs/campaigns.html#schedule-a-campaign
+   *
+   * @campaign_id {String} - Campaign ID
+   * @requestBody {Object} - Campaign data for schedule
+   */
   schedule: (
     campaign_id: string,
     params: ScheduleCampaignParams,
   ) => Promise<DiscriminatedResponse<SingleCampaignResponse>>;
+  /**
+   * @description Cancel a ready campaign
+   *
+   * @see https://developers.mailerlite.com/docs/campaigns.html#cancel-a-ready-campaign
+   *
+   * @campaign_id {String} - Campaign ID
+   */
   cancel: (
     campaign_id: string,
   ) => Promise<DiscriminatedResponse<SingleCampaignResponse>>;
+  /**
+   * @description Delete a campaign
+   *
+   * @see https://developers.mailerlite.com/docs/campaigns.html#delete-a-campaign
+   *
+   * @campaign_id {String} - Campaign ID
+   */
   delete: (
     campaign_id: string,
   ) => Promise<DiscriminatedResponse<SingleCampaignResponse>>;

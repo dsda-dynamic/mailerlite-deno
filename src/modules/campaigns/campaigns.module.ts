@@ -21,13 +21,6 @@ export default class Campaign implements CampaignsInterface {
     this.config = config;
   }
 
-  /**
-   * @description List campaigns
-   *
-   * @see https://developers.mailerlite.com/docs/campaigns.html#campaign-list
-   *
-   * @params {Object} - List campaigns params
-   */
   public get(
     params: GetCampaignsParams,
   ): Promise<DiscriminatedResponse<ListCampaignsResponse>> {
@@ -37,13 +30,6 @@ export default class Campaign implements CampaignsInterface {
     }, this.config);
   }
 
-  /**
-   * @description Fetch a campaign by ID
-   *
-   * @see https://developers.mailerlite.com/docs/campaigns.html#get-a-campaign
-   *
-   * @campaign_id {String} - Campaign ID
-   */
   public find(
     campaign_id: string,
   ): Promise<DiscriminatedResponse<SingleCampaignResponse>> {
@@ -58,13 +44,6 @@ export default class Campaign implements CampaignsInterface {
     );
   }
 
-  /**
-   * @description Create a campaign
-   *
-   * @see https://developers.mailerlite.com/docs/campaigns.html#create-a-campaign
-   *
-   * @requestBody {Object} - Campaign data for create
-   */
   public create(
     requestBody: CreateUpdateCampaignParams,
   ): Promise<DiscriminatedResponse<SingleCampaignResponse>> {
@@ -74,14 +53,6 @@ export default class Campaign implements CampaignsInterface {
     }, this.config);
   }
 
-  /**
-   * @description Update a campaign
-   *
-   * @see https://developers.mailerlite.com/docs/campaigns.html#update-campaign
-   *
-   * @campaign_id {String} - Campaign ID
-   * @requestBody {Object} - Campaign data for update
-   */
   public update(
     campaign_id: string,
     requestBody: CreateUpdateCampaignParams,
@@ -98,14 +69,6 @@ export default class Campaign implements CampaignsInterface {
     );
   }
 
-  /**
-   * @description Schedule a campaign
-   *
-   * @see https://developers.mailerlite.com/docs/campaigns.html#schedule-a-campaign
-   *
-   * @campaign_id {String} - Campaign ID
-   * @requestBody {Object} - Campaign data for schedule
-   */
   public schedule(
     campaign_id: string,
     requestBody: ScheduleCampaignParams,
@@ -122,13 +85,6 @@ export default class Campaign implements CampaignsInterface {
     );
   }
 
-  /**
-   * @description Cancel a ready campaign
-   *
-   * @see https://developers.mailerlite.com/docs/campaigns.html#cancel-a-ready-campaign
-   *
-   * @campaign_id {String} - Campaign ID
-   */
   public cancel(
     campaign_id: string,
   ): Promise<DiscriminatedResponse<SingleCampaignResponse>> {
@@ -143,13 +99,6 @@ export default class Campaign implements CampaignsInterface {
     );
   }
 
-  /**
-   * @description Delete a campaign
-   *
-   * @see https://developers.mailerlite.com/docs/campaigns.html#delete-a-campaign
-   *
-   * @campaign_id {String} - Campaign ID
-   */
   public delete(
     campaign_id: string,
   ): Promise<DiscriminatedResponse<SingleCampaignResponse>> {

@@ -22,13 +22,6 @@ export default class Segment implements SegmentsInterface {
     this.config = config;
   }
 
-  /**
-   * @description List all segments
-   *
-   * @see https://developers.mailerlite.com/docs/segments.html#list-all-segments
-   *
-   * @params {Object} - List segment params
-   */
   public get(
     params: GetSegmentsParams,
   ): Promise<DiscriminatedResponse<ListAllSegmentsResponse>> {
@@ -38,14 +31,6 @@ export default class Segment implements SegmentsInterface {
     }, this.config);
   }
 
-  /**
-   * @description Get subscribers belonging to a segment
-   *
-   * @see https://developers.mailerlite.com/docs/segments.html#get-subscribers-belonging-to-a-segment
-   *
-   * @segment_id {String} - Segment ID
-   * @params {Object} - Segment params
-   */
   public getSubscribers(
     segment_id: string,
     params: GetSegmentSubscribersParams,
@@ -62,14 +47,6 @@ export default class Segment implements SegmentsInterface {
     );
   }
 
-  /**
-   * @description Update segment
-   *
-   * @see https://developers.mailerlite.com/docs/segments.html#update-segment
-   *
-   * @segment_id {String} - Segment ID
-   * @requestBody {Object} - Segment data for update
-   */
   public update(
     segment_id: string,
     requestBody: UpdateSegmentParams,
@@ -86,13 +63,6 @@ export default class Segment implements SegmentsInterface {
     );
   }
 
-  /**
-   * @description Delete segment
-   *
-   * @see https://developers.mailerlite.com/docs/segments.html#delete-segment
-   *
-   * @segment_id {String} - Form ID
-   */
   public delete(segment_id: string): Promise<DiscriminatedResponse<null>> {
     validateId(segment_id);
 

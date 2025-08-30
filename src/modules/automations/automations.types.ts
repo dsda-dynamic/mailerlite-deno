@@ -3,12 +3,34 @@ import type { Links, Meta, Stats } from "../../utils/types.ts";
 import type { Email } from "../campaigns/campaigns.types.ts";
 
 export interface AutomationsInterface {
+  /**
+   * @description List all automations
+   *
+   * @see https://developers.mailerlite.com/docs/automations.html#list-all-automations
+   *
+   * @params {Object} - List automations params
+   */
   get: (
     params: GetAutomationsParams,
   ) => Promise<DiscriminatedResponse<ListAutomationsResponse>>;
+  /**
+   * @description Get an automation
+   *
+   * @see https://developers.mailerlite.com/docs/automations.html#get-an-automation
+   *
+   * @automation_id {String} - Automation ID
+   */
   find: (
     automation_id: string,
   ) => Promise<DiscriminatedResponse<SingleAutomationResponse>>;
+  /**
+   * @description Get the subscriber activity for an automation
+   *
+   * @see https://developers.mailerlite.com/docs/automations.html#get-the-subscriber-activity-for-an-automation
+   *
+   * @automation_id {String} - Automation ID
+   * @params {Object} - List automation subscribers params
+   */
   getAutomationSubscribers: (
     automation_id: string,
     params: AutomationSubsParams,

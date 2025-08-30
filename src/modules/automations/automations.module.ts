@@ -21,13 +21,6 @@ export default class Automation implements AutomationsInterface {
     this.config = config;
   }
 
-  /**
-   * @description List all automations
-   *
-   * @see https://developers.mailerlite.com/docs/automations.html#list-all-automations
-   *
-   * @params {Object} - List automations params
-   */
   public get(
     params: GetAutomationsParams,
   ): Promise<DiscriminatedResponse<ListAutomationsResponse>> {
@@ -37,13 +30,6 @@ export default class Automation implements AutomationsInterface {
     }, this.config);
   }
 
-  /**
-   * @description Get an automation
-   *
-   * @see https://developers.mailerlite.com/docs/automations.html#get-an-automation
-   *
-   * @automation_id {String} - Automation ID
-   */
   public find(
     automation_id: string,
   ): Promise<DiscriminatedResponse<SingleAutomationResponse>> {
@@ -58,14 +44,6 @@ export default class Automation implements AutomationsInterface {
     );
   }
 
-  /**
-   * @description Get the subscriber activity for an automation
-   *
-   * @see https://developers.mailerlite.com/docs/automations.html#get-the-subscriber-activity-for-an-automation
-   *
-   * @automation_id {String} - Automation ID
-   * @params {Object} - List automation subscribers params
-   */
   public getAutomationSubscribers(
     automation_id: string,
     params: AutomationSubsParams,

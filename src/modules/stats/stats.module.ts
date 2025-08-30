@@ -39,11 +39,6 @@ export default class Statistics implements StatsInterface {
     this.config = config;
   }
 
-  /**
-   * @description Get a list of sent campaigns
-   *
-   * @params {Object} - 'limit' & 'page' params
-   */
   public getSentCampaigns(
     params: GetCampaignsParams,
   ): Promise<ListCampaignsResponse> {
@@ -57,11 +52,6 @@ export default class Statistics implements StatsInterface {
     }, this.config).then(unwrapIfOk);
   }
 
-  /**
-   * @description Get stats for a sent campaign
-   *
-   * @campaign_id {String} - Campaign ID
-   */
   public async getSentCampaignStats(
     campaign_id: string,
   ): Promise<CampaignStats> {
@@ -86,14 +76,6 @@ export default class Statistics implements StatsInterface {
     }
   }
 
-  /**
-   * @description Get subscribers' activity of a sent campaign
-   *
-   * @see https://developers.mailerlite.com/docs/campaigns.html#get-subscribers-activity-of-a-sent-campaign
-   *
-   * @campaign_id {String} - Campaign ID
-   * @requestBody {Object} - Subscriber data for create or update
-   */
   public getSentCampaignSubscribers(
     campaign_id: string,
     requestBody: CampaignSubscribersActivityParams,
@@ -110,14 +92,6 @@ export default class Statistics implements StatsInterface {
     );
   }
 
-  /**
-   * @description Get a list of forms by type
-   *
-   * @see https://developers.mailerlite.com/docs/forms.html#list-all-forms
-   *
-   * @type {String} - Form type
-   * @params {Object} - List forms params
-   */
   public getFormsByType(
     type: FormTypes,
     params: GetFormsParams,
@@ -128,11 +102,6 @@ export default class Statistics implements StatsInterface {
     }, this.config);
   }
 
-  /**
-   * @description Get a stats (count) of a form by type
-   *
-   * @form_id {String} - Form ID
-   */
   public async getFormsCountByType(
     type: FormTypes,
   ): Promise<number> {
@@ -159,12 +128,6 @@ export default class Statistics implements StatsInterface {
     throw new Error("No stats available.");
   }
 
-  /**
-   * @description Get subscribers of a form
-   *
-   * @form_id {String} - Form ID
-   * @params {Object} - List forms subscribers params
-   */
   public getFormSubscribers(
     form_id: string,
     params: FormsSubscribersParams,
@@ -179,13 +142,6 @@ export default class Statistics implements StatsInterface {
     );
   }
 
-  /**
-   * @description List all automations
-   *
-   * @see https://developers.mailerlite.com/docs/automations.html#list-all-automations
-   *
-   * @params {Object} - List automations params
-   */
   public getAutomations(
     params: GetAutomationsParams,
   ): Promise<DiscriminatedResponse<ListAutomationsResponse>> {
@@ -195,11 +151,6 @@ export default class Statistics implements StatsInterface {
     }, this.config);
   }
 
-  /**
-   * @description Get stats for a specific automation
-   *
-   * @automation_id {String} - Automation ID
-   */
   public async getAutomationStats(
     automation_id: string,
     // deno-lint-ignore no-explicit-any
@@ -219,14 +170,6 @@ export default class Statistics implements StatsInterface {
     }
   }
 
-  /**
-   * @description Get the subscriber activity for an automation
-   *
-   * @see https://developers.mailerlite.com/docs/automations.html#get-the-subscriber-activity-for-an-automation
-   *
-   * @automation_id {String} - Automation ID
-   * @params {Object} - List automation subscribers params
-   */
   public getAutomationSubscribers(
     automation_id: string,
     params: AutomationSubsParams,

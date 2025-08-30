@@ -23,32 +23,89 @@ import type {
 } from "../../utils/fetch.ts";
 
 export interface StatsInterface {
+  /**
+   * @description Get a list of sent campaigns
+   *
+   * @params {Object} - 'limit' & 'page' params
+   */
   getSentCampaigns: (
     params: GetCampaignsParams,
   ) => Promise<ListCampaignsResponse>;
+  /**
+   * @description Get stats for a sent campaign
+   *
+   * @campaign_id {String} - Campaign ID
+   */
   getSentCampaignStats: (campaign_id: string) => Promise<CampaignStats>;
+  /**
+   * @description Get subscribers' activity of a sent campaign
+   *
+   * @see https://developers.mailerlite.com/docs/campaigns.html#get-subscribers-activity-of-a-sent-campaign
+   *
+   * @campaign_id {String} - Campaign ID
+   * @requestBody {Object} - Subscriber data for create or update
+   */
   getSentCampaignSubscribers: (
     campaign_id: string,
     requestBody: CampaignSubscribersActivityParams,
   ) => Promise<DiscriminatedResponse<CampaignSubscribersActivityResponse>>;
 
+  /**
+   * @description Get a list of forms by type
+   *
+   * @see https://developers.mailerlite.com/docs/forms.html#list-all-forms
+   *
+   * @type {String} - Form type
+   * @params {Object} - List forms params
+   */
   getFormsByType: (
     type: FormTypes,
     params: GetFormsParams,
   ) => Promise<DiscriminatedResponse<ListFormsResponse>>;
+  /**
+   * @description Get a stats (count) of a form by type
+   *
+   * @form_id {String} - Form ID
+   */
   getFormsCountByType: (type: FormTypes) => Promise<number>;
+  /**
+   * @description Get subscribers of a form
+   *
+   * @form_id {String} - Form ID
+   * @params {Object} - List forms subscribers params
+   */
   getFormSubscribers: (
     form_id: string,
     params: FormsSubscribersParams,
   ) => Promise<DiscriminatedResponse<ListSubscribersResponse>>;
 
+  /**
+   * @description List all automations
+   *
+   * @see https://developers.mailerlite.com/docs/automations.html#list-all-automations
+   *
+   * @params {Object} - List automations params
+   */
   getAutomations: (
     params: GetAutomationsParams,
   ) => Promise<DiscriminatedResponse<ListAutomationsResponse>>;
+  /**
+   * @description Get stats for a specific automation
+   *
+   * @automation_id {String} - Automation ID
+   */
   getAutomationStats: (
     automation_id: string,
     // deno-lint-ignore no-explicit-any
   ) => Promise<AutomationStats | FetchResponse<any>>;
+  /**
+   * @description Get the subscriber activity for an automation
+   *
+   * @see https://developers.mailerlite.com/docs/automations.html#get-the-subscriber-activity-for-an-automation
+   *
+   * @automation_id {String} - Automation ID
+   * @params {Object} - List automation subscribers params
+   */
   getAutomationSubscribers: (
     automation_id: string,
     params: AutomationSubsParams,

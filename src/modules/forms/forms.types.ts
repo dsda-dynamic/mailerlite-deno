@@ -2,14 +2,37 @@ import type { DiscriminatedResponse } from "../../utils/fetch.ts";
 import type { Links, Meta } from "../../utils/types.ts";
 
 export interface FormsInterface {
+  /**
+   * @description List all forms
+   *
+   * @see https://developers.mailerlite.com/docs/forms.html#list-all-forms
+   *
+   * @type {String} - Form type
+   * @params {Object} - List forms params
+   */
   get: (
     type: FormTypes,
     params: GetFormsParams,
   ) => Promise<DiscriminatedResponse<ListFormsResponse>>;
+  /**
+   * @description Update a form
+   *
+   * @see https://developers.mailerlite.com/docs/forms.html#update-a-form
+   *
+   * @form_id {String} - Form ID
+   * @requestBody {Object} - Form data for update
+   */
   update: (
     form_id: string,
     params: UpdateFormParams,
   ) => Promise<DiscriminatedResponse<SingleFormResponse>>;
+  /**
+   * @description Delete a form
+   *
+   * @see https://developers.mailerlite.com/docs/forms.html#delete-a-form
+   *
+   * @form_id {String} - Form ID
+   */
   delete: (form_id: string) => Promise<DiscriminatedResponse<null>>;
 }
 

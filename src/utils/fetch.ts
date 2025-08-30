@@ -40,7 +40,8 @@ export default async function request<T>(
   });
 
   return {
-    data: (res.body ?? null) && await exceptionToNull<T>(() => res.json()),
+    data: (res.body ?? null) &&
+      await exceptionToNull<T>(() => res.json() as Promise<T>),
     status: res.status,
     statusText: res.statusText,
     ok: res.ok,

@@ -1,6 +1,11 @@
 import type { DiscriminatedResponse } from "../../utils/fetch.ts";
 
 export interface BatchesInterface {
+  /**
+   * @description Make multiple request to api in a single call
+   *
+   * @see https://developers.mailerlite.com/docs/batching.html
+   */
   send: (params: BatchParams) => Promise<DiscriminatedResponse<BatchResponses>>;
 }
 

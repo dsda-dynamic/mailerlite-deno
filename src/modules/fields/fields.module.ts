@@ -21,13 +21,6 @@ export default class Field implements FieldsInterface {
     this.config = config;
   }
 
-  /**
-   * @description List all fields
-   *
-   * @see https://developers.mailerlite.com/docs/fields.html#list-all-fields
-   *
-   * @params {Object} - List fields params
-   */
   public get(
     params: GetFieldsParams,
   ): Promise<DiscriminatedResponse<ListFieldsResponse>> {
@@ -37,13 +30,6 @@ export default class Field implements FieldsInterface {
     }, this.config);
   }
 
-  /**
-   * @description Create a field
-   *
-   * @see https://developers.mailerlite.com/docs/fields.html#create-a-field
-   *
-   * @requestBody {Object} - Field data for create
-   */
   public create(
     requestBody: CreateFieldParams,
   ): Promise<DiscriminatedResponse<SingleFieldResponse>> {
@@ -53,14 +39,6 @@ export default class Field implements FieldsInterface {
     }, this.config);
   }
 
-  /**
-   * @description Update a field
-   *
-   * @see https://developers.mailerlite.com/docs/fields.html#update-a-field
-   *
-   * @field_id {String} - Field ID
-   * @requestBody {Object} - Field data for update
-   */
   public update(
     field_id: string,
     requestBody: UpdateFieldParams,
@@ -77,13 +55,6 @@ export default class Field implements FieldsInterface {
     );
   }
 
-  /**
-   * @description Delete a field
-   *
-   * @see https://developers.mailerlite.com/docs/fields.html#delete-a-field
-   *
-   * @field_id {String} - Field ID
-   */
   public delete(
     field_id: string,
   ): Promise<DiscriminatedResponse<SingleFieldResponse>> {

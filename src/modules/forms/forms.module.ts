@@ -21,14 +21,6 @@ export default class Form implements FormsInterface {
     this.config = config;
   }
 
-  /**
-   * @description List all forms
-   *
-   * @see https://developers.mailerlite.com/docs/forms.html#list-all-forms
-   *
-   * @type {String} - Form type
-   * @params {Object} - List forms params
-   */
   public get(
     type: FormTypes,
     params: GetFormsParams,
@@ -39,14 +31,6 @@ export default class Form implements FormsInterface {
     }, this.config);
   }
 
-  /**
-   * @description Update a form
-   *
-   * @see https://developers.mailerlite.com/docs/forms.html#update-a-form
-   *
-   * @form_id {String} - Form ID
-   * @requestBody {Object} - Form data for update
-   */
   public update(
     form_id: string,
     requestBody: UpdateFormParams,
@@ -59,13 +43,6 @@ export default class Form implements FormsInterface {
     }, this.config);
   }
 
-  /**
-   * @description Delete a form
-   *
-   * @see https://developers.mailerlite.com/docs/forms.html#delete-a-form
-   *
-   * @form_id {String} - Form ID
-   */
   public delete(form_id: string): Promise<DiscriminatedResponse<null>> {
     validateId(form_id);
 

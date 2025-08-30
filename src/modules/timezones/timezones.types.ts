@@ -1,6 +1,11 @@
 import type { DiscriminatedResponse } from "../../utils/fetch.ts";
 
 export interface TimezonesInterface {
+  /**
+   * @description List all timezones
+   *
+   * @see https://developers.mailerlite.com/docs/timezones.html#response
+   */
   get: () => Promise<DiscriminatedResponse<ListAllTimezonesResponse>>;
 }
 

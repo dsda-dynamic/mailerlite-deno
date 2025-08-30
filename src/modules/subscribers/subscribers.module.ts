@@ -23,13 +23,6 @@ export default class Subscriber implements SubscriberInterface {
     this.config = config;
   }
 
-  /**
-   * @description List Subscribers
-   *
-   * @see https://developers.mailerlite.com/docs/subscribers.html#list-all-subscribers
-   *
-   * @params {Object} - List Subscribers params
-   */
   public get(
     params: GetSubscribersParams,
   ): Promise<DiscriminatedResponse<ListSubscribersResponse>> {
@@ -39,13 +32,6 @@ export default class Subscriber implements SubscriberInterface {
     }, this.config);
   }
 
-  /**
-   * @description Create or update a subscriber
-   *
-   * @see https://developers.mailerlite.com/docs/subscribers.html#create-update-subscriber
-   *
-   * @requestBody {Object} - Subscriber data for create or update
-   */
   public createOrUpdate(
     requestBody: CreateOrUpdateSubscriberParams,
   ): Promise<DiscriminatedResponse<SingleSubscriberResponse>> {
@@ -55,14 +41,6 @@ export default class Subscriber implements SubscriberInterface {
     }, this.config);
   }
 
-  /**
-   * @description Update a subscriber
-   *
-   * @see https://developers.mailerlite.com/docs/subscribers.html#update-a-subscriber
-   *
-   * @subscriber_id {String} - Subscriber ID
-   * @requestBody {Object} - Subscriber data for update
-   */
   public update(
     subscriber_id: string,
     requestBody: UpdateSubscriberParams,
@@ -79,13 +57,6 @@ export default class Subscriber implements SubscriberInterface {
     );
   }
 
-  /**
-   * @description Fetch a subscriber by ID
-   *
-   * @see https://developers.mailerlite.com/docs/subscribers.html#fetch-a-subscriber
-   *
-   * @subscriber_id {String} - Subscriber ID
-   */
   public find(
     subscriber_id: string,
   ): Promise<DiscriminatedResponse<SingleSubscriberResponse>> {
@@ -100,11 +71,6 @@ export default class Subscriber implements SubscriberInterface {
     );
   }
 
-  /**
-   * @description Fetch total subscribers count
-   *
-   * @see https://developers.mailerlite.com/docs/subscribers.html#fetch-total-subscribers-count
-   */
   public getCount(): Promise<DiscriminatedResponse<CountSubscribersResponse>> {
     return discriminatedRequest<CountSubscribersResponse>(`/api/subscribers`, {
       method: "GET",
@@ -112,13 +78,6 @@ export default class Subscriber implements SubscriberInterface {
     }, this.config);
   }
 
-  /**
-   * @description Delete a subscriber
-   *
-   * @see https://developers.mailerlite.com/docs/subscribers.html#delete-a-subscriber
-   *
-   * @subscriber_id {String} - Subscriber ID
-   */
   public delete(subscriber_id: string): Promise<DiscriminatedResponse<null>> {
     validateId(subscriber_id);
 
@@ -127,13 +86,6 @@ export default class Subscriber implements SubscriberInterface {
     }, this.config);
   }
 
-  /**
-   * @description Forget a subscriber
-   *
-   * @see https://developers.mailerlite.com/docs/subscribers.html#forget-a-subscriber
-   *
-   * @subscriber_id {String} - Subscriber ID
-   */
   public forget(
     subscriber_id: string,
   ): Promise<DiscriminatedResponse<ForgetSubscriberResponse>> {

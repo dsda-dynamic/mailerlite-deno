@@ -17,11 +17,6 @@ export default class Batch implements BatchesInterface {
     this.config = config;
   }
 
-  /**
-   * @description Make multiple request to api in a single call
-   *
-   * @see https://developers.mailerlite.com/docs/batching.html
-   */
   public send(
     requestBody: BatchParams,
   ): Promise<DiscriminatedResponse<BatchResponses>> {

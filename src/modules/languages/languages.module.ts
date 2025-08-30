@@ -16,11 +16,6 @@ export default class Language implements LanguagesInterface {
     this.config = config;
   }
 
-  /**
-   * @description Campaign languages
-   *
-   * @see https://developers.mailerlite.com/docs/campaign-languages.html
-   */
   public get(): Promise<DiscriminatedResponse<ListAllLanguagesResponse>> {
     return discriminatedRequest<ListAllLanguagesResponse>(
       `/api/campaigns/languages`,
